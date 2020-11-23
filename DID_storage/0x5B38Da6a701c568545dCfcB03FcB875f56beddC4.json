@@ -1,0 +1,27 @@
+{
+    "@context": "https://w3id.org/did/v1",
+    "id": "did:ethr:0x5B38Da6a701c568545dCfcB03FcB875f56beddC4",
+    "issuer":"did:ethr:0xb9c5714089478a327f09197987f16f9e5d936e8a",
+    "publicKey": [
+        {
+            "id": "did:ethr:0x5B38Da6a701c568545dCfcB03FcB875f56beddC4#controller",
+            "type": "Secp256k1VerificationKey2018",
+            "controller": "did:ethr:0x5B38Da6a701c568545dCfcB03FcB875f56beddC4",
+            "ethereumAddress": "0x5B38Da6a701c568545dCfcB03FcB875f56beddC4"
+        }
+    ],
+    "claim":{
+        "staffID": "a2020011",
+        "allowenceStatus":1,
+        "expire":1609372800
+    },
+    "signautre":[
+        {
+            "type": "Secp256k1SignatureAuthentication2018",
+            "publicKey": "did:ethr:0xb9c5714089478a327f09197987f16f9e5d936e8a#controller",
+            "nonce":"factory013",
+            "signaturevalue":"dsfdasfadswefsdadsvczegnbrthnrtsda"
+
+        }
+    ]
+}   
