@@ -5,7 +5,7 @@ const bodyParser = require("koa-bodyparser");
 const koaLogger = require("koa-logger");
 const static = require("koa-static");
 
-const config = require("./config/config");
+const config = require("./configs/config");
 const routers = require("./routers/index");
 
 const app = new Koa();

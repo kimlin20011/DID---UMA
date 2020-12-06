@@ -3,35 +3,22 @@ const fs = require("fs");
 require("dotenv").config();
 
 //讀進合約abi,bytecode
-const RM_Abi = JSON.parse(
+const Registry_Abi = JSON.parse(
   fs
-    .readFileSync("./migrate/uma_sol_Resource_management_contract.abi")
+    .readFileSync("./migrates/DIDRegistry.abi")
     .toString()
 );
-const RM_Bytecode =
+const Registry_Bytecode =
   "0x" +
   fs
-    .readFileSync("./migrate/uma_sol_Resource_management_contract.bin")
+    .readFileSync("./migrates/DIDRegistry.bin")
     .toString();
-const Auth_Abi = JSON.parse(
-  fs.readFileSync("./migrate/uma_sol_Authorization_contract.abi").toString()
-);
-const Auth_Bytecode =
-  "0x" +
-  fs.readFileSync("./migrate/uma_sol_Authorization_contract.bin").toString();
 
 module.exports = {
   port: 3001,
-  auth: {
-    auth_dur: 13
-  },
-  RM: {
-    abi: RM_Abi,
-    bytecode: RM_Bytecode
-  },
-  Auth: {
-    abi: Auth_Abi,
-    bytecode: Auth_Bytecode
+  DIDRegistry: {
+    abi: Registry_Abi,
+    bytecode: Registry_Bytecode
   },
   geth: {
     account: `0x2cf0622bdcdb80a295669c1c1548b0601ec2c41b`,
@@ -39,14 +26,8 @@ module.exports = {
     rqp_account: `0x2cf0622bdcdb80a295669c1c1548b0601ec2c41b`,
     //暫時不用
     password: process.env.password,
-    gethWebsocketUrl: `ws://localhost:8546`,
+    gethWebsocketUrl: `ws://localhost:8545`,
     //keystoreDir:`C:\\Users\\nccu\\implement\\chain_new\\data\\keystore`
     keystoreDir: `/Users/nccu/Documents/implement/chain_new/data/keystore`
   },
-  mysql: {
-    host: process.env.HOST,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE
-  }
 };
