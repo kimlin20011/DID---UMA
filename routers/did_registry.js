@@ -5,5 +5,6 @@ module.exports = router
     .post('/deploy', didRegistry.deploy)
     .post('/registerIdentity', didRegistry.registerIdentity)
     .post('/setDocumentInfo', didRegistry.setDocumentInfo)
-    // .post('/deploy_Auth', blockchain.deploy_Auth_contract)
-    // .get('/accounts', blockchain.getAccounts)
+    .get('/verifyUrl', didRegistry.verifyUrl)
+    .get('/verifyDocument', didRegistry.verifyDocument)
+    .get('/DIDsDocumentUrls', didRegistry.DIDsDocumentUrls)

@@ -5,21 +5,24 @@ let gethWebsocketUrl = config.geth.gethWebsocketUrl;
 const Web3 = require('web3');
 // use the given Provider, e.g in Mist, or instantiate a new websocket provider
 const web3 = new Web3(Web3.givenProvider || gethWebsocketUrl);
+//let 
 
-module.exports = async function verifyDocument(data) {
+module.exports = async function DIDsDocumentUrls(data) {
     let Registry_Bytecode = config.DIDRegistry.bytecode;
     let Registry_Abi = config.DIDRegistry.abi;
-    let nowAccount =data.account;
     let _identity = data.identity;
-    let _url = data.url;
-    let _docHex = data.docHex;
-    let registryAddress = data.registryAddress;
+    //let registryAddress = data.registryAddress;
+    let registryAddress = fs.readFileSync('./Registry_address.txt').toString();
+    console.log(`registryAddress:${registryAddress}`);
     let Registry = new web3.eth.Contract(Registry_Abi,registryAddress);
 
     return new Promise((resolve, reject) => {
-        Registry.methods.verifyDocument(_identity,_url,_docHex).call()
+        Registry.methods.DIDsDocumentUrls(_identity).call()
             .then((return_result) => {
-                resolve(return_result);
+                //console.log(`return_result: ${return_result}`);
+                // hex to string
+                let url = web3.utils.hexToUtf8(return_result);
+                resolve(url);
             })
             .catch(function(err) {
             console.log(err);

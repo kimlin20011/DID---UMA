@@ -94,7 +94,7 @@ contract DIDRegistry {
    function verifyDocument(address _identity, bytes memory _url,bytes memory _doc) public view returns(bool){
        bytes32 url = (keccak256(abi.encodePacked(_url)));
        bytes32 doc = (keccak256(abi.encodePacked(_doc)));
-       if((keccak256(abi.encodePacked(DIDsDocumentInfo[_identity][url]))) == doc){
+       if((DIDsDocumentInfo[_identity][url]) == doc){
            return true;
        } else {
            return false;

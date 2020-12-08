@@ -37,7 +37,7 @@ module.exports = async function setDocumentInfo(data) {
                 result.event = receipt.events.DocumentInfoChanged.returnValues;
                 //result.name = receipt.events.addedResourceSet.returnValues.name;
                 result.status = true;
-                let result_event = JSON.stringify(result);
+                //let result_event = JSON.stringify(result);
                 //fs.writeFileSync('./identifier.json', result_event);
                 resolve(result);
             })
