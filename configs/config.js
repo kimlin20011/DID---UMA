@@ -4,21 +4,19 @@ require("dotenv").config();
 
 //讀進合約abi,bytecode
 const Registry_Abi = JSON.parse(
-  fs
-    .readFileSync("./migrates/DIDRegistry.abi")
-    .toString()
+  fs.readFileSync("./migrates/DIDRegistry.abi").toString()
 );
 const Registry_Bytecode =
-  "0x" +
-  fs
-    .readFileSync("./migrates/DIDRegistry.bin")
-    .toString();
+  "0x" + fs.readFileSync("./migrates/DIDRegistry.bin").toString();
 
 module.exports = {
   port: 3001,
   DIDRegistry: {
     abi: Registry_Abi,
     bytecode: Registry_Bytecode
+  },
+  did: {
+    method: `ethr`
   },
   geth: {
     account: `0x2cf0622bdcdb80a295669c1c1548b0601ec2c41b`,
@@ -29,5 +27,5 @@ module.exports = {
     gethWebsocketUrl: `ws://localhost:8545`,
     //keystoreDir:`C:\\Users\\nccu\\implement\\chain_new\\data\\keystore`
     keystoreDir: `/Users/nccu/Documents/implement/chain_new/data/keystore`
-  },
+  }
 };
