@@ -19,12 +19,12 @@ module.exports = {
     method: `ethr`
   },
   geth: {
-    account: `0x2cf0622bdcdb80a295669c1c1548b0601ec2c41b`,
+    account: `0x6894b3c5bfe044ec23d716eb7848824513f8c978`,
     //account: `0xdfbc7a1f5f867a9fd73d9fbe9da2b5b34ea67d95`,
-    rqp_account: `0x2cf0622bdcdb80a295669c1c1548b0601ec2c41b`,
+    rqp_account: `0x6894b3c5bfe044ec23d716eb7848824513f8c978`,
     //暫時不用
     password: process.env.password,
-    gethWebsocketUrl: `ws://localhost:8545`,
+    gethWebsocketUrl: `ws://localhost:8546`,
     //keystoreDir:`C:\\Users\\nccu\\implement\\chain_new\\data\\keystore`
     keystoreDir: `/Users/nccu/Documents/implement/chain_new/data/keystore`
   }

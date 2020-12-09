@@ -2,7 +2,7 @@ const Web3 = require("web3");
 const web3 = new Web3(Web3.givenProvider || `ws://localhost:8546`);
 
 let Hex1 = web3.utils.utf8ToHex(
-  "http://localhost:3001/DIDDocument/?did=0x5B38Da6a701c568545dCfcB03FcB875f56beddC4"
+  "http://localhost:3001/DIDDocument/?did=0x6894b3c5bfe044ec23d716eb7848824513f8c978"
 );
 console.log(Hex1);
 console.log(`length: ${Hex1.length}`);

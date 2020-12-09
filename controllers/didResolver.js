@@ -4,10 +4,8 @@ const config = require("../configs/config");
 
 module.exports = {
   async resolve(ctx) {
-    //console.log(ctx.query);
     let formData = {};
     let did = ctx.query.did;
-    //formData.identity = ctx.query.did;
     let did_info = did.split(":");
     let reslove_result = {};
 
@@ -24,6 +22,7 @@ module.exports = {
     } else {
       try {
         formData.identity = did_info[2];
+        //first, get did url from registry contract
         let DID_Url = await getDIDUrl(formData);
         //second, get did document from url
         let DID_Document = await resolve(DID_Url);
@@ -32,7 +31,5 @@ module.exports = {
         ctx.body = error;
       }
     }
-    //console.log(formData.identity);
-    //let DID_Url;
   }
 };
