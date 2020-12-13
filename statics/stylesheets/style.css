@@ -120,10 +120,11 @@ button {
   float: left;
   position: relative;
   top: 50%;
-  left: -50%;
+  /* left: -60%; */
+  transform: translateX(100%);
   transform: translateY(-50%);
-  /* margin-left: -160px;
-  margin-bottom: 20px; */
+  margin-left: -160px;
+  /* margin-bottom: 20px;  */
 }
 
 .right-col-3 {
