@@ -90,7 +90,7 @@ button {
   width: 100px;
   height: 50px;
   top: 50%;
-  left: 15%;
+  left: 3%;
   transform: translateY(-50%);
   border-right-style: solid;
   border-color: gray;
@@ -134,7 +134,8 @@ button {
 
 input {
   padding: 5px 10px 5px 10px;
-  width: 150px;
+  /* width: 150px; */
+  width: 100%;
 }
 
 .right-item {

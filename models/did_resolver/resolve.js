@@ -1,5 +1,4 @@
 "use strict";
-const fs = require("fs");
 const request = require("request");
 
 module.exports = async function resolve(_url) {

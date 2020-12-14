@@ -40,6 +40,25 @@
 			},
 			{
 				"indexed": false,
+				"internalType": "bool",
+				"name": "status",
+				"type": "bool"
+			}
+		],
+		"name": "DIDrevoked",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "identity",
+				"type": "address"
+			},
+			{
+				"indexed": false,
 				"internalType": "bytes32",
 				"name": "url_hash_keccak256",
 				"type": "bytes32"
@@ -283,6 +302,19 @@
 				"type": "bool"
 			}
 		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_identity",
+				"type": "address"
+			}
+		],
+		"name": "revokeIdentity",
+		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},

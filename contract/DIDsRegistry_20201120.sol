@@ -41,6 +41,11 @@ contract DIDRegistry {
         uint timestamp
     );
     
+    event DIDrevoked(
+        address indexed identity,
+        bool status
+    );
+    
     constructor() {
         contractOwner = msg.sender;
     }
@@ -53,6 +58,12 @@ contract DIDRegistry {
         
         emit Registered(_identity, msg.sender, (keccak256(abi.encodePacked(DIDsDocumentUrls[_identity]))), block.timestamp);
         return true;
+    }
+    
+    function revokeIdentity(address _identity) public  onlyOwner(_identity, msg.sender) {
+        delete DIDsDocumentUrls[_identity];
+        delete DIDsDocumentInfo[_identity][(keccak256(abi.encodePacked(DIDsDocumentUrls[_identity])))];
+        emit DIDrevoked(_identity, true);
     }
     
     /* function checkSignature(address _identity, uint8 _sigV, bytes32 _sigR, bytes32 _sigS, bytes32 hash) internal returns(address) {
@@ -80,7 +91,7 @@ contract DIDRegistry {
         DIDsDocumentInfo[_identity][url] = doc;
         DIDsUrlExpiration[_identity][url]= block.timestamp + _expTime;
         emit DocumentInfoChanged(_identity, url, doc, block.timestamp + _expTime, block.timestamp);
-      }
+    }
       
    function verifyUrl(address _identity, bytes memory _url) public view returns(bool){
        bytes32 url = (keccak256(abi.encodePacked(_url)));
@@ -94,7 +105,7 @@ contract DIDRegistry {
    function verifyDocument(address _identity, bytes memory _url,bytes memory _doc) public view returns(bool){
        bytes32 url = (keccak256(abi.encodePacked(_url)));
        bytes32 doc = (keccak256(abi.encodePacked(_doc)));
-       if((DIDsDocumentInfo[_identity][url]) == doc){
+       if(DIDsDocumentInfo[_identity][url]== doc){
            return true;
        } else {
            return false;

@@ -3,21 +3,26 @@
 let whoami = $("#whoami");
 let whoamiButton = $("#whoamiButton");
 
-let create_button = $("#create_button");
+let DID_registry_deploy = $("#DID_registry_deploy");
+let deploy_button = $("#deploy_button");
+let submit_registry_input = $("#submit_registry_input");
+let submit_registry_button = $("#submit_registry_button");
 let register_id = $("#register_id");
 let register_url = $("#register_url");
 let register_button = $("#register_button");
 let resolve_did = $("#resolve_did");
-
 let resolve_button = $("#resolve_button");
 let update_did = $("#update_did");
 let update_old_url = $("#update_old_url");
 let update_new_url = $("#update_new_url");
 let update_button = $("#update_button");
 let revoke_did = $("#revoke_did");
-
 let revoke_button = $("#revoke_button");
 let did_login_button = $("#did_login_button");
+
+let document_input = $("#document_input");
+let register_did_document_button = $("#register_did_document_button");
+let document_did_input = $("#document_did_input");
 
 let logger = $("#logger");
 let nowAccount = "";
@@ -25,8 +30,7 @@ let nowAccount = "";
 let password = `nccutest`;
 // used mapping
 //let IoTLoginedMap = new Map();
-let RM_address = "";
-let Auth_address = "";
+let registry_address = "";
 
 //let addressPasswordMap = new Map();
 
@@ -55,13 +59,12 @@ $.get("/blockchain/accounts", function(accounts) {
 });
 
 //按下deploy_RM_contract_button時
-deploy_RM_contract_button.on("click", function() {
+deploy_button.on("click", function() {
   waitTransactionStatus();
 
   $.post(
-    "/blockchain/deploy_RM",
+    "didRegistry/deploy",
     {
-      //address: B_OAuthAddress,
       account: nowAccount,
       password: password
     },
@@ -70,16 +73,16 @@ deploy_RM_contract_button.on("click", function() {
             result : result,
         });*/
       if (result.status === true) {
-        log(`RM 部署成功，合約位址：${result.address}`);
-        RM_address = result.address;
-        $("#rm_address").html(
-          `RM address:<b style="color: mediumblue">${RM_address}</b>`
+        log(`Registry deploy success，contract address：${result.address}`);
+        registry_address = result.address;
+        $("#registry_address").html(
+          `Registry address:<b style="color: mediumblue">${registry_address}</b>`
         );
         doneTransactionStatus();
       } else {
-        log(`RM 部署失敗`);
-        $("#rm_address").html(
-          `RM address:<b style="color: mediumblue">${RM_address}</b>`
+        log(`Registry deploy failed`);
+        $("#registry_address").html(
+          `Registry address:<br /><b style="color: mediumblue">${registry_address}</b>`
         );
         doneTransactionStatus();
       }
@@ -87,54 +90,105 @@ deploy_RM_contract_button.on("click", function() {
   );
 });
 
-//按下RM_contract_address_button時
-RM_contract_address_button.on("click", function() {
-  RM_address = RM_contract_address.val();
-  log(`RM 新增成功，合約位址：${RM_address}`);
-  $("#rm_address").html(
-    `RM address:<b style="color: mediumblue">${RM_address}</b>`
+//按下submit_registry_button時
+submit_registry_button.on("click", function() {
+  registry_address = submit_registry_input.val();
+  log(`registry address submit success, contract address：${registry_address}`);
+  $("#registry_address").html(
+    `Registry address:<br /><b style="color: mediumblue">${registry_address}</b>`
   );
 });
 
-//按下RM_contract_address_button時
-Authorization_contract_address_button.on("click", function() {
-  Auth_address = Authorization_contract_address.val();
-  log(`Auth 新增成功，合約位址：${Auth_address}`);
-  $("#auth_address").html(
-    `Auth address:<b style="color: mediumblue">${Auth_address}</b>`
-  );
-});
-
-//按下deploy_Authorization_contract_button時
-deploy_Authorization_contract_button.on("click", function() {
+register_button.on("click", function() {
   waitTransactionStatus();
 
   $.post(
-    "/blockchain/deploy_Auth",
+    "didRegistry/registerIdentity",
     {
       account: nowAccount,
-      RM_Address: RM_contract_address_of_Authorization.val(),
-      password: password
+      password: password,
+      url: register_url.val(),
+      identity: register_id.val(),
+      registryAddress: registry_address
     },
     function(result) {
       if (result.status === true) {
-        log(`Auth合約 部署成功，合約位址：${result.address}`);
-        Auth_address = result.address;
-        $("#auth_address").html(
-          `Auth address:<b style="color: mediumblue">${Auth_address}</b>`
-        );
+        log(result);
         doneTransactionStatus();
       } else {
-        log(`Auth合約部署失敗`);
+        log(`register failed`);
         log(result);
-        $("#auth_address").html(
-          `Auth address:<b style="color: mediumblue">${Auth_address}</b>`
-        );
         doneTransactionStatus();
       }
     }
   );
 });
+
+resolve_button.on("click", function() {
+  waitTransactionStatus();
+
+  $.get(`didResolver/resolve?did=${resolve_did.val()}`, function(result) {
+    if (result.status === true) {
+      log(result);
+      doneTransactionStatus();
+    } else {
+      log(`resolve did failed`);
+      log(result);
+      doneTransactionStatus();
+    }
+  });
+});
+
+update_button.on("click", function() {
+  waitTransactionStatus();
+
+  $.post(
+    "didRegistry/urlUpdate",
+    {
+      account: nowAccount,
+      password: password,
+      url: update_new_url.val(),
+      previous_url: update_old_url.val(),
+      identity: update_did.val(),
+      registryAddress: registry_address
+    },
+    function(result) {
+      if (result.status === true) {
+        log(result);
+        doneTransactionStatus();
+      } else {
+        log(`update failed`);
+        log(result);
+        doneTransactionStatus();
+      }
+    }
+  );
+});
+
+revoke_button.on("click", function() {
+  waitTransactionStatus();
+
+  $.post(
+    "didRegistry/revokeDID",
+    {
+      account: nowAccount,
+      password: password,
+      registryAddress: registry_address,
+      identity: revoke_did.val(),
+    },
+    function(result) {
+      if (result.status === true) {
+        log(result);
+        doneTransactionStatus();
+      } else {
+        log(`revoke failed`);
+        log(result);
+        doneTransactionStatus();
+      }
+    }
+  );
+});
+
 /*
 function islogined() {
     if (IoTLoginedMap.get(nowAccount) === `succeeded`){
@@ -149,15 +203,24 @@ function islogined() {
 
 function waitTransactionStatus() {
   $("#accountStatus").html(
-    '帳戶狀態：<b style="color: blue">(等待區塊鏈交易驗證中...)</b>'
+    'Account status:<b style="color: blue">(Transaction Padding...)</b>'
   );
 }
 
 function doneTransactionStatus() {
-  $("#accountStatus").text("帳戶狀態：");
+  $("#accountStatus").text("Account status:");
 }
 
 // mouseover
+// $(function() {
+//   $(":button").mouseover(function() {
+//     whoamiButton.attr("style", "background-color: #608de2");
+//   });
+//   $(":button").mouseout(function() {
+//     whoamiButton.attr("style", "background-color: #4364a1");
+//   });
+// });
+
 $(function() {
   whoamiButton.mouseover(function() {
     whoamiButton.attr("style", "background-color: #608de2");
@@ -168,58 +231,75 @@ $(function() {
 });
 
 $(function() {
-  deploy_RM_contract_button.mouseover(function() {
-    deploy_RM_contract_button.attr("style", "background-color: #608de2");
+  deploy_button.mouseover(function() {
+    deploy_button.attr("style", "background-color: #608de2");
   });
-  deploy_RM_contract_button.mouseout(function() {
-    deploy_RM_contract_button.attr("style", "background-color: #4364a1");
-  });
-});
-
-$(function() {
-  deploy_Authorization_contract_button.mouseover(function() {
-    deploy_Authorization_contract_button.attr(
-      "style",
-      "background-color: #608de2"
-    );
-  });
-  deploy_Authorization_contract_button.mouseout(function() {
-    deploy_Authorization_contract_button.attr(
-      "style",
-      "background-color: #4364a1"
-    );
+  deploy_button.mouseout(function() {
+    deploy_button.attr("style", "background-color: #4364a1");
   });
 });
 
 $(function() {
-  Authorization_contract_address_button.mouseover(function() {
-    Authorization_contract_address_button.attr(
-      "style",
-      "background-color: #608de2"
-    );
+  submit_registry_button.mouseover(function() {
+    submit_registry_button.attr("style", "background-color: #608de2");
   });
-  Authorization_contract_address_button.mouseout(function() {
-    Authorization_contract_address_button.attr(
-      "style",
-      "background-color: #4364a1"
-    );
+  submit_registry_button.mouseout(function() {
+    submit_registry_button.attr("style", "background-color: #4364a1");
+  });
+});
+
+
+$(function() {
+  register_button.mouseover(function() {
+    register_button.attr("style", "background-color: #608de2");
+  });
+  register_button.mouseout(function() {
+    register_button.attr("style", "background-color: #4364a1");
   });
 });
 
 $(function() {
-  RM_contract_address_button.mouseover(function() {
-    RM_contract_address_button.attr("style", "background-color: #608de2");
+  resolve_button.mouseover(function() {
+    resolve_button.attr("style", "background-color: #608de2");
   });
-  RM_contract_address_button.mouseout(function() {
-    RM_contract_address_button.attr("style", "background-color: #4364a1");
+  resolve_button.mouseout(function() {
+    resolve_button.attr("style", "background-color: #4364a1");
   });
 });
 
 $(function() {
-  changeToRMButton.mouseover(function() {
-    changeToRMButton.attr("style", "background-color: #608de2");
+  update_button.mouseover(function() {
+    update_button.attr("style", "background-color: #608de2");
   });
-  changeToRMButton.mouseout(function() {
-    changeToRMButton.attr("style", "background-color: #4364a1");
+  update_button.mouseout(function() {
+    update_button.attr("style", "background-color: #4364a1");
+  });
+});
+
+$(function() {
+  revoke_button.mouseover(function() {
+    revoke_button.attr("style", "background-color: #608de2");
+  });
+  revoke_button.mouseout(function() {
+    revoke_button.attr("style", "background-color: #4364a1");
+  });
+});
+
+$(function() {
+  register_did_document_button.mouseover(function() {
+    register_did_document_button.attr("style", "background-color: #608de2");
+  });
+  register_did_document_button.mouseout(function() {
+    register_did_document_button.attr("style", "background-color: #4364a1");
+  });
+});
+
+
+$(function() {
+  did_login_button.mouseover(function() {
+    did_login_button.attr("style", "background-color: #608de2");
+  });
+  did_login_button.mouseout(function() {
+    did_login_button.attr("style", "background-color: #4364a1");
   });
 });

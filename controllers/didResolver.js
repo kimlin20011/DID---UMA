@@ -26,8 +26,11 @@ module.exports = {
         let DID_Url = await getDIDUrl(formData);
         //second, get did document from url
         let DID_Document = await resolve(DID_Url);
-        ctx.body = DID_Document;
+        reslove_result.status = true;
+        reslove_result.DID_Document = DID_Document;
+        ctx.body = reslove_result;
       } catch (error) {
+        reslove_result.status = false;
         ctx.body = error;
       }
     }

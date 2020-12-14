@@ -41,18 +41,35 @@
             <div class="left-col-2">
               <!-- <div class="title"><br />Geth Login<br /></div> -->
               <div>
-                <h5 class="title">Geth Login</h5>
+                <h5 class="title">Setting</h5>
                 <br />
               </div>
             </div>
           </div>
           <div class="left-item">
             <div class="right-col-2">
-              <h5 id="accountStatus" style="color: red">Account status</h5>
-              <h5>Select Geth Account</h5>
+              <h5 id="accountStatus" style="color: red">Account status:</h5>
+              <h5 style="font-weight:bold;">Select Geth Account</h5>
               <select id="whoami"></select
               ><br />
               <button id="whoamiButton">login</button>
+              <hr size="5px" color="blue" align="center" width="100%" />
+              <p id="registry_address" style="color: red">
+                Registry address: not exist
+              </p>
+              <h5 style="font-weight:bold;">DID registry deploy (Opt.)</h5>
+              <button type="button" id="deploy_button">deploy</button>
+              <hr size="2px" align="center" width="100%" />
+              <h5 style="font-weight:bold;">
+                Submit Deployed DID registry (Opt.)
+              </h5>
+              <input
+                id="submit_registry_input"
+                type="text"
+                placeholder="DID registry address"
+              />
+              <br /><br />
+              <button type="button" id="submit_registry_button">submit</button>
             </div>
           </div>
         </div>
@@ -68,10 +85,10 @@
           </div>
           <div class="left-item">
             <div class="right-col-2">
-              <h5 style="font-weight:bold;">DID create</h5>
+              <!-- <h5 style="font-weight:bold;">DID create</h5>
               <button type="button" id="create_button">create</button>
-              <hr size="2px" align="center" width="100%" />
-              <h5 style="font-weight:bold;">DID register</h5>
+              <hr size="2px" align="center" width="100%" /> -->
+              <h5 style="font-weight:bold;">DID register (Create)</h5>
               <input id="register_id" type="text" placeholder="identity" />
               <br /><br />
               <input id="register_url" type="text" placeholder="URL" />
@@ -82,10 +99,11 @@
               <hr size="2px" align="center" width="100%" />
               <h5 style="font-weight:bold;">DID resolve (Read)</h5>
               <input id="resolve_did" type="text" placeholder="DID" />
+              <br /><br />
               <button type="button" id="resolve_button">resolve</button>
               <br />
               <hr size="2px" align="center" width="100%" />
-              <h5 style="font-weight:bold;">DID update</h5>
+              <h5 style="font-weight:bold;">DID update (Update)</h5>
               <input
                 id="update_did"
                 type="text"
@@ -105,7 +123,21 @@
               <hr size="2px" align="center" width="100%" />
               <h5 style="font-weight:bold;">DID revoke (Delete)</h5>
               <input id="revoke_did" type="text" placeholder="DID" />
+              <br /><br />
               <button type="button" id="revoke_button">resolve</button>
+              <hr size="5px" color="blue" align="center" width="100%" />
+              <h5 style="font-weight:bold;">Register DID Document</h5>
+              <input id="document_did_input" type="text" placeholder="DID" />
+              <br /><br />
+              <input
+                id="document_input"
+                type="text"
+                placeholder="DID Document (encode)"
+              />
+              <br /><br />
+              <button type="button" id="register_did_document_button">
+                register
+              </button>
             </div>
           </div>
         </div>
