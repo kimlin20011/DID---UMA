@@ -1,5 +1,6 @@
 const getDIDUrl = require("../models/did_registry/getDIDsDocumentUrls");
 const resolve = require("../models/did_resolver/resolve");
+const create_DID = require("../models/did_resolver/createDID");
 const config = require("../configs/config");
 
 module.exports = {
@@ -33,6 +34,17 @@ module.exports = {
         reslove_result.status = false;
         ctx.body = error;
       }
+    }
+  },
+  async createDID(ctx) {
+    let formData = ctx.request.body;
+    let res = {};
+    try {
+      let result = await create_DID(formData);
+      res = result;
+      ctx.body = res;
+    } catch (error) {
+      ctx.body = error;
     }
   }
 };

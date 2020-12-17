@@ -24,6 +24,9 @@ let document_input = $("#document_input");
 let register_did_document_button = $("#register_did_document_button");
 let document_did_input = $("#document_did_input");
 
+let creatDID_input = $("#creatDID_input");
+let creatDID_button = $("#creatDID_button");
+
 let logger = $("#logger");
 let nowAccount = "";
 
@@ -174,7 +177,7 @@ revoke_button.on("click", function() {
       account: nowAccount,
       password: password,
       registryAddress: registry_address,
-      identity: revoke_did.val(),
+      identity: revoke_did.val()
     },
     function(result) {
       if (result.status === true) {
@@ -182,6 +185,30 @@ revoke_button.on("click", function() {
         doneTransactionStatus();
       } else {
         log(`revoke failed`);
+        log(result);
+        doneTransactionStatus();
+      }
+    }
+  );
+});
+
+creatDID_button.on("click", function() {
+  waitTransactionStatus();
+
+  $.post(
+    "didResolver/createDID",
+    {
+      account: nowAccount,
+      password: password,
+      registryAddress: registry_address,
+      identity: creatDID_input.val()
+    },
+    function(result) {
+      if (result.status === true) {
+        log(result);
+        doneTransactionStatus();
+      } else {
+        log(`creatDID failed`);
         log(result);
         doneTransactionStatus();
       }
@@ -248,7 +275,6 @@ $(function() {
   });
 });
 
-
 $(function() {
   register_button.mouseover(function() {
     register_button.attr("style", "background-color: #608de2");
@@ -294,12 +320,20 @@ $(function() {
   });
 });
 
-
 $(function() {
   did_login_button.mouseover(function() {
     did_login_button.attr("style", "background-color: #608de2");
   });
   did_login_button.mouseout(function() {
     did_login_button.attr("style", "background-color: #4364a1");
+  });
+});
+
+$(function() {
+  creatDID_button.mouseover(function() {
+    creatDID_button.attr("style", "background-color: #608de2");
+  });
+  creatDID_button.mouseout(function() {
+    creatDID_button.attr("style", "background-color: #4364a1");
   });
 });

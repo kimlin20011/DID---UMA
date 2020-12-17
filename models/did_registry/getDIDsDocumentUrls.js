@@ -11,7 +11,6 @@ module.exports = async function DIDsDocumentUrls(data) {
   let Registry_Abi = config.DIDRegistry.abi;
   let _identity = data.identity;
   let registryAddress = fs.readFileSync("./Registry_address.txt").toString();
-  console.log(`registryAddress:${registryAddress}`);
   let Registry = new web3.eth.Contract(Registry_Abi, registryAddress);
 
   return new Promise((resolve, reject) => {
@@ -21,6 +20,7 @@ module.exports = async function DIDsDocumentUrls(data) {
       .then(return_result => {
         //console.log(`return_result: ${return_result}`);
         // hex to string
+        console.log(`return_result:${return_result}`)
         let url_base64_encode = web3.utils.hexToUtf8(return_result);
         let url = Base64.decode(url_base64_encode);
         resolve(url);

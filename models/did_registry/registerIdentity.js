@@ -12,6 +12,7 @@ module.exports = async function registerIdentity(data) {
   let Registry_Abi = config.DIDRegistry.abi;
   let nowAccount = data.account;
   let _identity = data.identity;
+  console.log(`_identity:${_identity}`)
   let _url = data.url;
   let _url_base64_encode = await Base64.encode(_url);
   let _url_base64_encode_hex_encode = await web3.utils.utf8ToHex(

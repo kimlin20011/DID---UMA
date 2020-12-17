@@ -16,7 +16,16 @@ module.exports = {
     bytecode: Registry_Bytecode
   },
   did: {
-    method: `ethr`
+    method: `ethr`,
+    context: `https://w3id.org/did/v1`,
+    issuer: `0x6894b3c5bfe044ec23d716eb7848824513f8c978`,
+    publicKey: {
+      type: "Secp256k1VerificationKey2018"
+    },
+    expire: 365, //days
+    signature: {
+      type: "Secp256k1SignatureAuthentication2018"
+    }
   },
   geth: {
     account: `0x6894b3c5bfe044ec23d716eb7848824513f8c978`,
