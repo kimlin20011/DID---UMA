@@ -117,9 +117,17 @@ contract DIDRegistry {
 
 contract Authorization {
     
+    struct AuthorizationInfo{
+        uint registerTime;
+        bytes32 claimHash;
+        uint expireTime;
+    }
+    
     mapping(address => address) public owners;  //identity => ownerAddress
     mapping(address => bool) public protectedResourceDIDs;
-    mapping(bytes32 => address) public permissionTickets;
+    mapping(bytes32 => address) public permissionTickets; //tickets => DID
+    mapping(address => AuthorizationInfo) public authorizationPolicies; //requestPartyDID => AuthorizationInfo
+    mapping(address => mapping(bytes32 => bytes32)) public accessToken; //DIDrqp => ticket => token
     
     modifier onlyOwner(address _sender) {
         require (contractOwner == _sender);
@@ -135,12 +143,22 @@ contract Authorization {
     address public DIDRegistryAddress;
     address public contractOwner;
     string public DID_method;
+    uint public tokenExpireDays = 30;
     
     event DIDRegistryAddressChanged(
         address indexed DIDRegistryAddress,
         string method,
         uint timestamp
     );
+    
+    event PolicyRegistered(
+        address indexed targetDID,
+        address msgSender, 
+        string claimHash,
+        uint timestamp,
+        uint expireTime
+    );
+    
     event ProtectedResourceDIDCreated(
         address indexed protectedResourceDID,
         uint timestamp
@@ -151,6 +169,14 @@ contract Authorization {
         bytes32 permissionTicket, 
         address msgSender,
         string DID_Method
+    );
+    
+    event TokenReleased (
+        address DIDrqp,
+        address msgSender,
+        bytes32 accessToken,
+        uint timestamp,
+        uint expireTime
     );
     
     constructor(address _DIDRegistryAddress, string memory _method) {
@@ -169,6 +195,17 @@ contract Authorization {
         protectedResourceDIDs[_idenetity] =true;
         emit ProtectedResourceDIDCreated(_idenetity,block.timestamp);
     }
+    
+    function setPolicy(address _idenetity, bytes memory _claim, uint _expireDate) public onlyOwner(msg.sender){
+        bytes32 claimHash = (keccak256(abi.encodePacked(_claim)));
+        uint expireDate = block.timestamp+ _expireDate* 1 days;
+        authorizationPolicies[_idenetity] = AuthorizationInfo(
+            block.timestamp,
+            claimHash,
+            expireDate
+            );
+        emit PolicyRegistered(_idenetity,msg.sender,claimHash,block.timestamp,expireDate);
+    }
 
 
     function ticketGenerate(address _DeviceIdentity, string memory _DID_method) public verifyDID(_DeviceIdentity) {
@@ -182,11 +219,49 @@ contract Authorization {
         emit TicketGenerated(_DeviceIdentity, ticket, msg.sender, DID_method);
     }
     
-    function accessAuthorize(address _identity, bytes memory _url) public returns(bool) {
+    function accessAuthorize(
+        bytes32 _ticket,
+        address _DIDrqp, 
+        uint8 _v,
+        bytes32 _r,
+        bytes32 _s
+        ) public returns(bool) {
+        //ticket mapping到identifier 以查詢ticket是要對應到什麼resource
+        require(permissionTickets[_ticket] != address(0), "invaild_ticket");
+        AuthorizationInfo storage claimInfo = authorizationPolicies[permissionTickets[_ticket]];
         
+        bytes memory prefix = "\x19Ethereum Signed Message:\n32";
+        address signer = ecrecover(
+            (keccak256(abi.encodePacked(prefix,claimInfo.claimHash))),
+            _v, _r, _s
+        );
+        
+        if(signer == _DIDrqp){
+            // Token透過msg.sender/timestamp/random number/隨機生成
+            uint random_number = uint(keccak256(abi.encodePacked(block.timestamp)))%100 +1;
+            uint expireDate = block.timestamp+ tokenExpireDays * 1 days;
+            accessToken[msg.sender][_ticket] = (keccak256(abi.encodePacked(block.timestamp, _DIDrqp,_ticket, random_number))) ;
+            emit TokenReleased(_DIDrqp,msg.sender,accessToken[msg.sender][_ticket],block.timestamp,expireDate);
+            return true;
+        }else{
+            return false;
+        }
     }
     
-    function TokenIntrospect(address _identity, bytes memory _url) public returns(bool) {
-        
+    function TokenIntrospect(address _identity, bytes memory _url) public view returns(address){
+        require(_token != 0, "invaild_signedToken");
+
+        bytes memory prefix = "\x19Ethereum Signed Message:\n32";
+        address signer = ecrecover(
+            (keccak256(abi.encodePacked(prefix,_token))),
+            _v, _r, _s
+        );
+
+        if(access_token[signer] != 0 && access_token[signer] == _token){
+            return signer;
+        }else{
+            return signer;
+        }
+
     }
 }
