@@ -9,6 +9,13 @@ const Registry_Abi = JSON.parse(
 const Registry_Bytecode =
   "0x" + fs.readFileSync("./migrates/DIDRegistry.bin").toString();
 
+//讀進合約abi,bytecode
+const Authorization_Abi = JSON.parse(
+  fs.readFileSync("./migrates/Authorization.abi").toString()
+);
+const Authorization_Bytecode =
+  "0x" + fs.readFileSync("./migrates/Authorization.bin").toString();
+
 module.exports = {
   port: 3001,
   DIDRegistry: {

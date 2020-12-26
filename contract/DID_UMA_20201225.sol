@@ -123,27 +123,29 @@ contract Authorization {
         uint expireTime;
     }
     
-    mapping(address => address) public owners;  //identity => ownerAddress
+    mapping(address => bool) public owners; 
     mapping(address => bool) public protectedResourceDIDs;
     mapping(bytes32 => address) public permissionTickets; //tickets => DID
     mapping(address => AuthorizationInfo) public authorizationPolicies; //requestPartyDID => AuthorizationInfo
     mapping(address => mapping(bytes32 => bytes32)) public accessToken; //DIDrqp => ticket => token
+    mapping(bytes32 => uint) public tokenValidTime; //token => timestamp
+    mapping(bytes32 => address) public tokenTarget; //token => DIDrqp 
     
     modifier onlyOwner(address _sender) {
-        require (contractOwner == _sender);
+        require (owners[_sender] == true);
         _;
     }
     
     modifier verifyDID(address _identity) {
-       DIDRegistry RC = DIDRegistry(_identity);
-       require (RC.owners(_identity) != address(0));
+       DIDRegistry RC = DIDRegistry(DIDRegistryAddress);
+       require (RC.owners(_identity) != address(0),"identity not found");
        _;
     }
     
     address public DIDRegistryAddress;
     address public contractOwner;
     string public DID_method;
-    uint public tokenExpireDays = 30;
+    uint public tokenExpireDays = 100;
     
     event DIDRegistryAddressChanged(
         address indexed DIDRegistryAddress,
@@ -154,7 +156,7 @@ contract Authorization {
     event PolicyRegistered(
         address indexed targetDID,
         address msgSender, 
-        string claimHash,
+        bytes32 claimHash,
         uint timestamp,
         uint expireTime
     );
@@ -181,8 +183,13 @@ contract Authorization {
     
     constructor(address _DIDRegistryAddress, string memory _method) {
         contractOwner = msg.sender;
+        owners[msg.sender] = true;
         DID_method = _method;
         DIDRegistryAddress = _DIDRegistryAddress;
+    }
+    
+    function addOwner(address _newOwnerAddress) public onlyOwner(msg.sender){
+        owners[_newOwnerAddress] = true;
     }
     
     function setDIDRegistry(address _DIDRegistryAddress, string memory _DID_method) public onlyOwner(msg.sender){
@@ -191,20 +198,21 @@ contract Authorization {
         emit DIDRegistryAddressChanged(_DIDRegistryAddress,DID_method,block.timestamp);
     }
     
-    function setProtectedResourceDID(address _idenetity) public onlyOwner(msg.sender){
-        protectedResourceDIDs[_idenetity] =true;
-        emit ProtectedResourceDIDCreated(_idenetity,block.timestamp);
+    function setProtectedResourceDID(address _identity) public onlyOwner(msg.sender){
+        protectedResourceDIDs[_identity] =true;
+        emit ProtectedResourceDIDCreated(_identity,block.timestamp);
     }
     
-    function setPolicy(address _idenetity, bytes memory _claim, uint _expireDate) public onlyOwner(msg.sender){
+    function setPolicy(address _identity, bytes memory _claim, uint _expireDate) public onlyOwner(msg.sender){
+        require (protectedResourceDIDs[_identity] == true,"identity not found");
         bytes32 claimHash = (keccak256(abi.encodePacked(_claim)));
         uint expireDate = block.timestamp+ _expireDate* 1 days;
-        authorizationPolicies[_idenetity] = AuthorizationInfo(
+        authorizationPolicies[_identity] = AuthorizationInfo(
             block.timestamp,
             claimHash,
             expireDate
             );
-        emit PolicyRegistered(_idenetity,msg.sender,claimHash,block.timestamp,expireDate);
+        emit PolicyRegistered(_identity,msg.sender,claimHash,block.timestamp,expireDate);
     }
 
 
@@ -240,28 +248,37 @@ contract Authorization {
             // Token透過msg.sender/timestamp/random number/隨機生成
             uint random_number = uint(keccak256(abi.encodePacked(block.timestamp)))%100 +1;
             uint expireDate = block.timestamp+ tokenExpireDays * 1 days;
-            accessToken[msg.sender][_ticket] = (keccak256(abi.encodePacked(block.timestamp, _DIDrqp,_ticket, random_number))) ;
-            emit TokenReleased(_DIDrqp,msg.sender,accessToken[msg.sender][_ticket],block.timestamp,expireDate);
+            bytes32 token =(keccak256(abi.encodePacked(block.timestamp, _DIDrqp,_ticket, random_number))) ;
+            accessToken[msg.sender][_ticket] = token;
+            tokenValidTime[token] = expireDate;
+            tokenTarget[token] = _DIDrqp;
+            emit TokenReleased(_DIDrqp,msg.sender,token,block.timestamp,expireDate);
             return true;
         }else{
             return false;
         }
     }
     
-    function TokenIntrospect(address _identity, bytes memory _url) public view returns(address){
-        require(_token != 0, "invaild_signedToken");
-
+    function TokenIntrospect(
+        bytes32 _token,
+        uint8 _v,
+        bytes32 _r,
+        bytes32 _s) public view returns(bool){
+    
+        if(block.timestamp >= tokenValidTime[_token]){ //expired
+            return false;
+        }
+        
         bytes memory prefix = "\x19Ethereum Signed Message:\n32";
         address signer = ecrecover(
             (keccak256(abi.encodePacked(prefix,_token))),
             _v, _r, _s
         );
-
-        if(access_token[signer] != 0 && access_token[signer] == _token){
-            return signer;
+        
+        if(tokenTarget[_token] == signer){
+           return true;
         }else{
-            return signer;
+           return false;
         }
-
     }
 }
