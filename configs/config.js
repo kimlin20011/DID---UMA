@@ -22,6 +22,10 @@ module.exports = {
     abi: Registry_Abi,
     bytecode: Registry_Bytecode
   },
+  Authorization: {
+    abi: Authorization_Abi,
+    bytecode: Authorization_Bytecode
+  },
   did: {
     method: `ethr`,
     context: `https://w3id.org/did/v1`,
