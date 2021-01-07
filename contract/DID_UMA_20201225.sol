@@ -120,6 +120,7 @@ contract Authorization {
     struct AuthorizationInfo{
         uint registerTime;
         bytes32 claimHash;
+        address claimIssuer;
         uint expireTime;
     }
     
@@ -155,7 +156,8 @@ contract Authorization {
     
     event PolicyRegistered(
         address indexed targetDID,
-        address msgSender, 
+        address msgSender,
+        address claimIssuer,
         bytes32 claimHash,
         uint timestamp,
         uint expireTime
@@ -203,16 +205,17 @@ contract Authorization {
         emit ProtectedResourceDIDCreated(_identity,block.timestamp);
     }
     
-    function setPolicy(address _identity, bytes memory _claim, uint _expireDate) public onlyOwner(msg.sender){
+    function setPolicy(address _identity,address _issuer, bytes memory _claim, uint _expireDate) public onlyOwner(msg.sender){
         require (protectedResourceDIDs[_identity] == true,"identity not found");
         bytes32 claimHash = (keccak256(abi.encodePacked(_claim)));
         uint expireDate = block.timestamp+ _expireDate* 1 days;
         authorizationPolicies[_identity] = AuthorizationInfo(
             block.timestamp,
             claimHash,
+            _issuer,
             expireDate
             );
-        emit PolicyRegistered(_identity,msg.sender,claimHash,block.timestamp,expireDate);
+        emit PolicyRegistered(_identity,msg.sender,_issuer,claimHash,block.timestamp,expireDate);
     }
 
 
@@ -244,7 +247,7 @@ contract Authorization {
             _v, _r, _s
         );
         
-        if(signer == _DIDrqp){
+        if(signer == claimInfo.claimIssuer){
             // Token透過msg.sender/timestamp/random number/隨機生成
             uint random_number = uint(keccak256(abi.encodePacked(block.timestamp)))%100 +1;
             uint expireDate = block.timestamp+ tokenExpireDays * 1 days;

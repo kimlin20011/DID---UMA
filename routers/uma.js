@@ -1,5 +1,9 @@
 const router = require("koa-router")();
-const didRegistry = require("../controllers/uma_authorization");
+const uma = require("../controllers/uma_authorization");
 
 module.exports = router
-  .post("/deploy", didRegistry.deploy)
+  .post("/deploy", uma.deploy)
+  .post("/setProtectedResource", uma.setProtectedResource)
+  .post("/setPolicy", uma.setPolicy)
+  .post("/requestRegister", uma.requestRegister)
+  .post("/accessAuthorize", uma.accessAuthorize)

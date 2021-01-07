@@ -1,6 +1,7 @@
 const getDIDUrl = require("../models/did_registry/getDIDsDocumentUrls");
 const resolve = require("../models/did_resolver/resolve");
 const create_DID = require("../models/did_resolver/createDID");
+const signClaim = require("../models/did_resolver/signClaim");
 const config = require("../configs/config");
 
 module.exports = {
@@ -46,5 +47,16 @@ module.exports = {
     } catch (error) {
       ctx.body = error;
     }
-  }
+  },
+  async signClaim(ctx) {
+    let formData = ctx.request.body;
+    let res = {};
+    try {
+      let result = await signClaim(formData);
+      res = result;
+      ctx.body = res;
+    } catch (error) {
+      ctx.body = error;
+    }
+  },
 };

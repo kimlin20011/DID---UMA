@@ -3,7 +3,7 @@
 const fs = require("fs");
 const config = require("../../configs/config");
 var moment = require("moment");
-const signMessage = require("./signMessage");
+const sign = require("./signClaim");
 // let gethWebsocketUrl = config.geth.gethWebsocketUrl;
 // const Web3 = require("web3");
 // // use the given Provider, e.g in Mist, or instantiate a new websocket provider
@@ -21,8 +21,8 @@ module.exports = async function createDID(data) {
   let expire_time = now + config.did.expire * 31536000;
   let randomID = Math.floor(Math.random() * 1000000) + 1;
   let _nonce = (Math.floor(Math.random() * 10000) + 1).toString();
-  //let _signature = `fafsa`;
-  let _signature = await signMessage(config.did.issuer, _identity, _nonce);
+  //let _signature = await signMessage(config.did.issuer, _identity, _nonce);
+  let _signature = await sign(nowAccount,config.geth.password, claim);
 
   let did_info = {
     "@context": config.did.context,

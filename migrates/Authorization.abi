@@ -57,6 +57,12 @@
 			},
 			{
 				"indexed": false,
+				"internalType": "address",
+				"name": "claimIssuer",
+				"type": "address"
+			},
+			{
+				"indexed": false,
 				"internalType": "bytes32",
 				"name": "claimHash",
 				"type": "bytes32"
@@ -321,6 +327,11 @@
 				"type": "bytes32"
 			},
 			{
+				"internalType": "address",
+				"name": "claimIssuer",
+				"type": "address"
+			},
+			{
 				"internalType": "uint256",
 				"name": "expireTime",
 				"type": "uint256"
@@ -422,6 +433,11 @@
 			{
 				"internalType": "address",
 				"name": "_identity",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_issuer",
 				"type": "address"
 			},
 			{
