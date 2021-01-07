@@ -1,5 +1,4 @@
-# DID-UMA
-# DID-Resolver Design
+# DID-UMA System Design
 
 # 參考資料
 * [Baidu DID ](https://did.baidu.com/did-resolver-api/)
@@ -43,6 +42,7 @@ http://localhost:3001/DIDDocument/?did={id}
 ### resolve
 > get
 > http://localhost:3001/didResolver/resolve?did={did}
+> did範例：`did:ethr:0x5008f32B96783a1A1015242f3A0AF4E5D5683FAd`
 * 說明：透過didResolver取得對應的did document
 * 流程
     * resolver model取得url後面的did
@@ -91,7 +91,7 @@ http://localhost:3001/DIDDocument/?did={id}
 ![](https://i.imgur.com/WvH3Ae2.png)
 
 
-## DID operation 
+## DID Operation 
 * 創建、修改、刪除 DID
 * 輸入
     * did
@@ -150,30 +150,129 @@ http://localhost:3001/DIDDocument/?did={id}
 * 輸入 identifier
 * 輸出編碼後的did url
 
-### verifyDocument
+### CreateDID
+> post
+> 系統自動透過取得ethereum address與idenetity之後，自動生成DID Document與DID url
+* 輸入：
+    * ethereum address 
+    * identity
+* 輸出
+    * did url 
+    * did document(可以考慮要不要顯示) - 可以不用
 
 
-## DID operation result
+### DID operation result
 * 輸入
     * transactionID
 * 輸出
     * status
 
-    
+## UMA Authorization API
+### Deploy
+> post
+> `http://localhost:3001/uma/deploy`
+* 授權方部署Authorization合約
+* 輸入參數
+    * account：controller 的以太坊account
+    * password：controller 的geth密碼
+* 輸出
+    * event
+
+### setProtectedResource
+> post
+> `http://localhost:3001/uma/deploy`
+* 資源擁有者註冊資源DID至合約
+* 輸入參數
+    * account：controller 的以太坊account
+    * password：controller 的geth密碼
+    * resourceIdentity：代表資源的DID
+* 輸出
+    * ProtectedResourceDIDCreated Event
+
+### setPolicy 
+> post
+> `http://localhost:3001/uma/setPolicy`
+* 資源擁有者在智能合約中設定policy
+* 輸入參數
+    * account：controller 的以太坊account
+    * password：controller 的geth密碼
+    * resourceIdentity：代表資源的DID
+    * claim：與設定的claim
+    * expireDate：有效期間（date）
+    * issuerAddress：有效DID的發布者之以太坊地址
+* 輸出
+    * PolicyRegistered Event
+![](https://i.imgur.com/bNhmHQM.png)
+
+### requestRegister 
+> post
+> `http://localhost:3001/uma/requestRegister`
+* authorization server向智能合約註冊接收到的RqP request，並取得permission ticket
+* 輸入參數
+    * account：controller 的以太坊account
+    * password：controller 的geth密碼
+    * resourceIdentity：代表資源的DID
+    * didMethod：didMethod
+* 輸出
+    * TicketGenerated Event
+        * 帶有permission ticket
+![](https://i.imgur.com/wiCK9s5.png)
+
+### accessAuthorize
+> post
+> `http://localhost:3001/uma/accessAuthorize`
+* rqp向authorization server請求授權，透過DID resolver解析完取得did document中的claim signature之後，向智能合約並取得access token
+* 輸入參數
+    * account：controller 的以太坊account
+    * password：controller 的geth密碼
+    * rqpIdentity：代表rqp的DID
+    * didMethod：didMethod
+    * signature：DID document中claim之簽章
+    * ticket:requestRegister階段收到的permission ticket
+* 輸出
+    * TokenReleased Event
+        * 帶有access token 
+![](https://i.imgur.com/i4UAneR.png)
+
+### tokenIntrospect
+> get
+> `http://localhost:3001/uma/tokenIntrospect`
+* authorization server向智能合約驗證rqp所傳送的token與signature的正確性
+* 輸入參數
+    * token
+    * tokenSignature
+* 輸出
+    * true/false
+
 # 研究
 ## 智能合約中URL存取型態
 * URL存入
     * 先將URL編碼成base64
     * 再將base64的string透過web3轉換成hex
-
 `web3.utils.utf8ToHex(string)    `
 
 * URL讀取
     * 從solidity中將bytes變數讀出
     * 將讀出數值透過web3轉換成utf-8 string
     * 最後透過base64解碼
-
 `web3.utils.hexToUtf8(Hex2)`
+
+
+## 前端設計
+> 前端操作介面設計
+### DID operation
+* Creation
+* Read
+* Update
+* Revoke
+
+### DID resolve
+* resolve
+* dereference 
+
+
+### DID login
+* User-login[](https://)
 
 
 
