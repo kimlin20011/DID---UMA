@@ -7,18 +7,14 @@ const Web3 = require("web3");
 const web3 = new Web3(Web3.givenProvider || gethWebsocketUrl);
 const unlockAccount = require("../accountUnlock");
 
-module.exports = async function signClaim(data) {
+module.exports = async function sign(data) {
   let nowAccount = data.account;
   let password = data.password;
-  let claimByte = web3.utils.utf8ToHex(
-      data.claim
-      );
-  let claimHash = web3.utils.soliditySha3({type: 'bytes', value: claimByte});
-  //console.log(`claimHash:${claimHash}`)
+  let text = data.text;
 
   return new Promise((resolve, reject) => {
     web3.eth.personal
-      .sign(claimHash, nowAccount, password)
+      .sign(text, nowAccount, password)
       .then(result => {
         resolve(result);
       })

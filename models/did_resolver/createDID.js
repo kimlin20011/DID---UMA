@@ -6,7 +6,6 @@ var moment = require("moment");
 const sign = require("./signClaim");
 // let gethWebsocketUrl = config.geth.gethWebsocketUrl;
 // const Web3 = require("web3");
-// // use the given Provider, e.g in Mist, or instantiate a new websocket provider
 // const web3 = new Web3(Web3.givenProvider || gethWebsocketUrl);
 const { Base64 } = require("js-base64");
 
@@ -22,7 +21,8 @@ module.exports = async function createDID(data) {
   let randomID = Math.floor(Math.random() * 1000000) + 1;
   let _nonce = (Math.floor(Math.random() * 10000) + 1).toString();
   //let _signature = await signMessage(config.did.issuer, _identity, _nonce);
-  let _signature = await sign(nowAccount,config.geth.password, claim);
+  let _signature = await sign(data);
+  console.log(`_signature:${_signature}`);
 
   let did_info = {
     "@context": config.did.context,

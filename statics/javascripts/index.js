@@ -25,6 +25,7 @@ let register_did_document_button = $("#register_did_document_button");
 let document_did_input = $("#document_did_input");
 
 let creatDID_input = $("#creatDID_input");
+let creatDID_claim_input = $("#creatDID_claim_input");
 let creatDID_button = $("#creatDID_button");
 
 let logger = $("#logger");
@@ -201,7 +202,8 @@ creatDID_button.on("click", function() {
       account: nowAccount,
       password: password,
       registryAddress: registry_address,
-      identity: creatDID_input.val()
+      identity: creatDID_input.val(),
+      claim: creatDID_claim_input.val()
     },
     function(result) {
       if (result.status === true) {

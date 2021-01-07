@@ -11,7 +11,7 @@ module.exports = async function setPolicy(data) {
   let Authorization_Abi = config.Authorization.abi;
   let nowAccount = data.account;
   let password = data.password;
-  let issuer = data.issuerAddress
+  let issuer = data.issuerAddress;
   let resourceIdentity = data.resourceIdentity;
   let claimByte = web3.utils.utf8ToHex(
       data.claim

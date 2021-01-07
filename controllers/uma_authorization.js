@@ -3,7 +3,7 @@ const setProtectedResource = require("../models/uma/setProtectedResourceDID");
 const setPolicy = require("../models/uma/setPolicy");
 const requestRegister = require("../models/uma/requestRegister");
 const accessAuthorize = require("../models/uma/accessAuthorize");
-
+const tokenIntrospect = require("../models/uma/tokenIntrospect");
 
 module.exports = {
   async deploy(ctx) {
@@ -55,6 +55,17 @@ module.exports = {
     let res = {};
     try {
       let result = await accessAuthorize(formData);
+      res = result;
+      ctx.body = res;
+    } catch (error) {
+      ctx.body = error;
+    }
+  },
+  async tokenIntrospect(ctx) {
+    let formData = ctx.request.body;
+    let res = {};
+    try {
+      let result = await tokenIntrospect(formData);
       res = result;
       ctx.body = res;
     } catch (error) {

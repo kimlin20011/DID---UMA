@@ -13,6 +13,7 @@ const uma = require("./uma");
 router.use("/didRegistry", didRegistry.routes(), didRegistry.allowedMethods());
 router.use("/didResolver", didResolver.routes(), didResolver.allowedMethods());
 router.use("/DIDDocument", didStorage.routes(), didStorage.allowedMethods());
+router.use("/blockchain", blockchain.routes(), blockchain.allowedMethods());
 router.use("/uma", uma.routes(), uma.allowedMethods());
 
 module.exports = router;
