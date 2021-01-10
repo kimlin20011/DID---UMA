@@ -37,8 +37,9 @@ module.exports = async function createDID(data) {
       }
     ],
     claim: {
-      Nationality: `${config.did.nationality}`,
-      userID: randomID,
+      Owner: `${config.did.ownerName}`,
+      name: `${data.resourceName}`,
+      resourceID: randomID,
       allowenceStatus: 1,
       expire: expire_time
     },

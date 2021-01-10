@@ -36,7 +36,9 @@ module.exports = {
     expire: 365, //days
     signature: {
       type: "Secp256k1SignatureAuthentication2018"
-    }
+    },
+    ownerName: "KanazawaUniversity",
+    nationality: `Japan`
   },
   geth: {
     account: `0x6894b3c5bfe044ec23d716eb7848824513f8c978`,

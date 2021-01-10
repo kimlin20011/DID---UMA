@@ -240,102 +240,13 @@ function doneTransactionStatus() {
   $("#accountStatus").text("Account status:");
 }
 
-// mouseover
-// $(function() {
-//   $(":button").mouseover(function() {
-//     whoamiButton.attr("style", "background-color: #608de2");
-//   });
-//   $(":button").mouseout(function() {
-//     whoamiButton.attr("style", "background-color: #4364a1");
-//   });
-// });
-
-$(function() {
-  whoamiButton.mouseover(function() {
-    whoamiButton.attr("style", "background-color: #608de2");
-  });
-  whoamiButton.mouseout(function() {
-    whoamiButton.attr("style", "background-color: #4364a1");
-  });
-});
-
-$(function() {
-  deploy_button.mouseover(function() {
-    deploy_button.attr("style", "background-color: #608de2");
-  });
-  deploy_button.mouseout(function() {
-    deploy_button.attr("style", "background-color: #4364a1");
-  });
-});
-
-$(function() {
-  submit_registry_button.mouseover(function() {
-    submit_registry_button.attr("style", "background-color: #608de2");
-  });
-  submit_registry_button.mouseout(function() {
-    submit_registry_button.attr("style", "background-color: #4364a1");
-  });
-});
-
-$(function() {
-  register_button.mouseover(function() {
-    register_button.attr("style", "background-color: #608de2");
-  });
-  register_button.mouseout(function() {
-    register_button.attr("style", "background-color: #4364a1");
-  });
-});
-
-$(function() {
-  resolve_button.mouseover(function() {
-    resolve_button.attr("style", "background-color: #608de2");
-  });
-  resolve_button.mouseout(function() {
-    resolve_button.attr("style", "background-color: #4364a1");
-  });
-});
-
-$(function() {
-  update_button.mouseover(function() {
-    update_button.attr("style", "background-color: #608de2");
-  });
-  update_button.mouseout(function() {
-    update_button.attr("style", "background-color: #4364a1");
-  });
-});
-
-$(function() {
-  revoke_button.mouseover(function() {
-    revoke_button.attr("style", "background-color: #608de2");
-  });
-  revoke_button.mouseout(function() {
-    revoke_button.attr("style", "background-color: #4364a1");
-  });
-});
-
-$(function() {
-  register_did_document_button.mouseover(function() {
-    register_did_document_button.attr("style", "background-color: #608de2");
-  });
-  register_did_document_button.mouseout(function() {
-    register_did_document_button.attr("style", "background-color: #4364a1");
-  });
-});
-
-$(function() {
-  did_login_button.mouseover(function() {
-    did_login_button.attr("style", "background-color: #608de2");
-  });
-  did_login_button.mouseout(function() {
-    did_login_button.attr("style", "background-color: #4364a1");
-  });
-});
-
-$(function() {
-  creatDID_button.mouseover(function() {
-    creatDID_button.attr("style", "background-color: #608de2");
-  });
-  creatDID_button.mouseout(function() {
-    creatDID_button.attr("style", "background-color: #4364a1");
+$(":button").each(function() {
+  $(this).on({
+    mouseover: function() {
+      $(this).attr("style", "background-color: #608de2");
+    },
+    mouseout: function() {
+      $(this).attr("style", "background-color: #4364a1");
+    }
   });
 });

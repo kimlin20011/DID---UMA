@@ -1,1 +1,22 @@
-{"@context":"https://w3id.org/did/v1","id":"0x96a5f387D6FFeC86B4F1Ff413fF3183dA3201706","issuer":"did:ethr:0x6894b3c5bfe044ec23d716eb7848824513f8c978","publicKey":[{"id":"did:ethr:0x96a5f387D6FFeC86B4F1Ff413fF3183dA3201706#controller","type":"Secp256k1VerificationKey2018","controller":"did:ethr:0x96a5f387D6FFeC86B4F1Ff413fF3183dA3201706","ethereumAddress":"0x96a5f387D6FFeC86B4F1Ff413fF3183dA3201706"}],"claim":{"staffID":734193,"allowenceStatus":1,"expire":13118829160},"signautre":[{"type":"Secp256k1SignatureAuthentication2018","publicKey":"did:ethr:0x6894b3c5bfe044ec23d716eb7848824513f8c978","nonce":"2683","signaturevalue":"0xf6a08f81da6f573e1f468523c07877e7bb6e6e42cb994b64fc8d066ed4f6e97b66c2c447781d8704e656cae0c0938fe934b15fe56ebeadce32118d4ad7d200531b"}]}
+{
+  "@context": "https://w3id.org/did/v1",
+  "id": "0x96a5f387D6FFeC86B4F1Ff413fF3183dA3201706",
+  "issuer": "did:ethr:0x6894b3c5bfe044ec23d716eb7848824513f8c978",
+  "publicKey": [
+    {
+      "id": "did:ethr:0x96a5f387D6FFeC86B4F1Ff413fF3183dA3201706#controller",
+      "type": "Secp256k1VerificationKey2018",
+      "controller": "did:ethr:0x96a5f387D6FFeC86B4F1Ff413fF3183dA3201706",
+      "ethereumAddress": "0x96a5f387D6FFeC86B4F1Ff413fF3183dA3201706"
+    }
+  ],
+  "claim": { "staffID": 734193, "allowenceStatus": 1, "expire": 13118829160 },
+  "signautre": [
+    {
+      "type": "Secp256k1SignatureAuthentication2018",
+      "publicKey": "did:ethr:0x6894b3c5bfe044ec23d716eb7848824513f8c978",
+      "nonce": "2683",
+      "signaturevalue": "0xf6a08f81da6f573e1f468523c07877e7bb6e6e42cb994b64fc8d066ed4f6e97b66c2c447781d8704e656cae0c0938fe934b15fe56ebeadce32118d4ad7d200531b"
+    }
+  ]
+}

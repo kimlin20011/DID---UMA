@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Protected Resource Management</title>
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    -->
+    <link rel="stylesheet" href="stylesheets/style.css" />
+  </head>
+
+  <body>
+    <div class="head">
+      <img class="headimg" src="https://i.imgur.com/2ufnS6k.png" />
+      <img class="headimg" src="https://i.imgur.com/GlBja5L.png" />
+      <img class="headimg" src="https://i.imgur.com/gX1VYt0.png" />
+      <img class="headimg" src="https://i.imgur.com/noDq28C.png" />
+      <h1>Reource Management</h1>
+    </div>
+
+    <div class="flex">
+      <div class="item" style="width: 50%;">
+        <div class="topic">
+          <div class="topic-item">
+            <img src="https://i.imgur.com/vUW22sE.png" />
+          </div>
+          <div class="topic-item">
+            <h2>Resource owner</h2>
+          </div>
+        </div>
+
+        <br />
+
+        <div class="left-flex">
+          <div class="left-item">
+            <div class="left-col-2">
+              <!-- <div class="title"><br />Geth Login<br /></div> -->
+              <div>
+                <h5 class="title"><br />Setting</h5>
+                <br />
+              </div>
+            </div>
+          </div>
+          <div class="left-item">
+            <div class="right-col-2">
+              <h5 id="accountStatus" style="color: red">Account status:</h5>
+              <h5 style="font-weight:bold;">Select Geth Account</h5>
+              <select id="whoami"></select
+              ><br />
+              <button id="whoamiButton">login</button>
+              <hr size="5px" color="blue" align="center" width="100%" />
+              <p id="Authorization_address" style="color: red">
+                Authorization address: not exist
+              </p>
+              <h5 style="font-weight:bold;">
+                Authorization contract deploy (Opt.)
+              </h5>
+              <button type="button" id="deploy_button">deploy</button>
+              <hr size="2px" align="center" width="100%" />
+              <h5 style="font-weight:bold;">
+                Submit Deployed Authorization contract (Opt.)
+              </h5>
+              <input
+                id="submit_Authorization_input"
+                type="text"
+                placeholder="Authorization address"
+              />
+              <br /><br />
+              <button type="button" id="submit_Authorization_button">
+                submit
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <br />
+
+        <div class="left-flex">
+          <div class="left-item">
+            <div class="left-col-2">
+              <h5 class="title">Resource Management<br /></h5>
+              <!-- <div class="title"><br />DID Login<br /></div> -->
+            </div>
+          </div>
+          <div class="left-item">
+            <div class="right-col-2">
+              <h5 style="font-weight:bold;">
+                Resource Register
+              </h5>
+              <input
+                id="resource_name_input"
+                type="text"
+                placeholder="resource name"
+              />
+              <br /><br />
+              <input
+                id="resource_did_input"
+                type="text"
+                placeholder="resource did"
+              />
+              <br /><br />
+              <button type="button" id="resource_register_button">
+                submit
+              </button>
+
+              <hr size="5px" color="blue" align="center" width="100%" />
+
+              <h5 style="font-weight:bold;">
+                Set policy
+              </h5>
+              <input
+                id="policy_resource_did_input"
+                type="text"
+                placeholder="resource DID"
+              />
+              <br /><br />
+              <input
+                id="issuer_input"
+                type="text"
+                placeholder="issuer ethereum address"
+              />
+              <br /><br />
+              <input id="claim_input" type="text" placeholder="claim" />
+              <br /><br />
+              <button type="button" id="policy_button">submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="item" style="width: 50%;">
+        <div class="topic">
+          <div class="topic-item">
+            <img src="https://i.imgur.com/dQuVooa.png?1" />
+          </div>
+          <div class="topic-item">
+            <h2>Log</h2>
+          </div>
+        </div>
+        <div class="right-item" style="overflow-y: auto;">
+          <pre id="logger"></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <span class="copyright"
+          >Copyright &copy; Chun-An Lin. All rights reserved</span
+        >
+      </div>
+    </footer>
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="javascripts/resourceManage.js"></script>
+
+    <!--
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
+  </body>
+</html>
