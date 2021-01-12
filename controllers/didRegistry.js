@@ -22,7 +22,7 @@ module.exports = {
   },
   async registerIdentity(ctx) {
     let formData = ctx.request.body;
-    did = formData.identity;
+    let did = formData.identity;
     let did_info = did.split(":");
     let result = {};
 

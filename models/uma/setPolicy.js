@@ -16,7 +16,7 @@ module.exports = async function setPolicy(data) {
   let claimByte = web3.utils.utf8ToHex(
       data.claim
       );
-  let expireDate = data.expireDate;
+  let expireDate =config.Authorization.expireDate;
   let AuthorizationAddress = fs
     .readFileSync("./Authorization_address.txt")
     .toString();

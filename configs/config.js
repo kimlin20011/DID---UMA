@@ -24,7 +24,8 @@ module.exports = {
   },
   Authorization: {
     abi: Authorization_Abi,
-    bytecode: Authorization_Bytecode
+    bytecode: Authorization_Bytecode,
+    expireDate: 365,
   },
   did: {
     method: `ethr`,
@@ -49,5 +50,11 @@ module.exports = {
     gethWebsocketUrl: `ws://localhost:8546`,
     //keystoreDir:`C:\\Users\\nccu\\implement\\chain_new\\data\\keystore`
     keystoreDir: `/Users/nccu/Documents/implement/chain_new/data/keystore`
+  },
+  mysql:{
+        host: process.env.HOST,
+        user: process.env.DATABASE_USER,
+        password: process.env.DATABASE_PASSWORD,
+        database: process.env.DATABASE
   }
 };

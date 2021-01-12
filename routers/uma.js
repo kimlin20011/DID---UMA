@@ -5,6 +5,7 @@ const umaRqP = require("../controllers/umaRqP");
 module.exports = router
   .post("/deploy", uma.deploy)
   .post("/setProtectedResource", uma.setProtectedResource)
+  .post("/registerResource", uma.registerResource)
   .post("/setPolicy", uma.setPolicy)
   .post("/requestRegister", uma.requestRegister)
   .post("/accessAuthorize", uma.accessAuthorize)

@@ -97,11 +97,11 @@ resource_register_button.on("click", function() {
   waitTransactionStatus();
 
   $.post(
-    "uma/setProtectedResource",
+    "uma/registerResource",
     {
       account: nowAccount,
       password: password,
-      resourceIdentity: resource_did_input.val(),
+      identity: resource_did_input.val(),
       resourceName: resource_name_input.val()
     },
     function(result) {
@@ -117,107 +117,30 @@ resource_register_button.on("click", function() {
   );
 });
 
-// resolve_button.on("click", function() {
-//   waitTransactionStatus();
+policy_button.on("click", function() {
+  waitTransactionStatus();
 
-//   $.get(`didResolver/resolve?did=${resolve_did.val()}`, function(result) {
-//     if (result.status === true) {
-//       log(result);
-//       doneTransactionStatus();
-//     } else {
-//       log(`resolve did failed`);
-//       log(result);
-//       doneTransactionStatus();
-//     }
-//   });
-// });
-
-// update_button.on("click", function() {
-//   waitTransactionStatus();
-
-//   $.post(
-//     "didRegistry/urlUpdate",
-//     {
-//       account: nowAccount,
-//       password: password,
-//       url: update_new_url.val(),
-//       previous_url: update_old_url.val(),
-//       identity: update_did.val(),
-//       registryAddress: registry_address
-//     },
-//     function(result) {
-//       if (result.status === true) {
-//         log(result);
-//         doneTransactionStatus();
-//       } else {
-//         log(`update failed`);
-//         log(result);
-//         doneTransactionStatus();
-//       }
-//     }
-//   );
-// });
-
-// revoke_button.on("click", function() {
-//   waitTransactionStatus();
-
-//   $.post(
-//     "didRegistry/revokeDID",
-//     {
-//       account: nowAccount,
-//       password: password,
-//       registryAddress: registry_address,
-//       identity: revoke_did.val()
-//     },
-//     function(result) {
-//       if (result.status === true) {
-//         log(result);
-//         doneTransactionStatus();
-//       } else {
-//         log(`revoke failed`);
-//         log(result);
-//         doneTransactionStatus();
-//       }
-//     }
-//   );
-// });
-
-// creatDID_button.on("click", function() {
-//   waitTransactionStatus();
-
-//   $.post(
-//     "didResolver/createDID",
-//     {
-//       account: nowAccount,
-//       password: password,
-//       registryAddress: registry_address,
-//       identity: creatDID_input.val(),
-//       claim: creatDID_claim_input.val()
-//     },
-//     function(result) {
-//       if (result.status === true) {
-//         log(result);
-//         doneTransactionStatus();
-//       } else {
-//         log(`creatDID failed`);
-//         log(result);
-//         doneTransactionStatus();
-//       }
-//     }
-//   );
-// });
-
-/*
-function islogined() {
-    if (IoTLoginedMap.get(nowAccount) === `succeeded`){
-        $('#isGranted').html(`1. 登入狀態: ${nowAccount}<b style="color: green"><br>您已登入，可開始操作device</b>`);
-        $('#loginStatus').html(`登入狀態: ${nowAccount}<b style="color: mediumblue"><br>登入成功 </b>`);
-    }else{
-        $('#isGranted').html(`1. 登入狀態: ${nowAccount}<b style="color: red"><br>您尚未登入，請先從上方登入</b>`);
-        $('#loginStatus').html(`登入狀態: ${nowAccount}<b style="color: red"><br>尚未登入 </b>`);
+  $.post(
+    "uma/setPolicy",
+    {
+      account: nowAccount,
+      password: password,
+      issuer:issuer_input.val(),
+      resourceIdentity: policy_resource_did_input.val(),
+      claim: claim_input.val(),
+    },
+    function(result) {
+      if (result.status === true) {
+        log(result);
+        doneTransactionStatus();
+      } else {
+        log(`set policy failed`);
+        log(result);
+        doneTransactionStatus();
+      }
     }
-}
-*/
+  );
+});
 
 function waitTransactionStatus() {
   $("#accountStatus").html(

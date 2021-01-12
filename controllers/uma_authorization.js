@@ -4,6 +4,8 @@ const setPolicy = require("../models/uma/setPolicy");
 const requestRegister = require("../models/uma/requestRegister");
 const accessAuthorize = require("../models/uma/accessAuthorize");
 const tokenIntrospect = require("../models/uma/tokenIntrospect");
+const registerResource = require("../models/authorizationServer/registerResource");
+const config = require("../configs/config");
 
 module.exports = {
   async deploy(ctx) {
@@ -28,15 +30,67 @@ module.exports = {
       ctx.body = error;
     }
   },
+  async registerResource(ctx) {
+  let formData = ctx.request.body;
+    let did = formData.identity;
+    let did_info = did.split(":");
+    let result = {};
+
+    if (did_info[0] != "did") {
+      console.log(`not did format`);
+      result.msg = `not did format`;
+      result.status = false;
+      ctx.body = result;
+    } else if (did_info[1] != config.did.method) {
+      console.log(`not supportting DID method`);
+      result.msg = `not supportting DID method`;
+      result.status = false;
+      ctx.body = result;
+    } else {
+      try {
+        formData.identity = did_info[2];
+        //first, get did url from registry contract
+        result.res = await registerResource(formData);
+        result.status = true;
+        ctx.body = result;
+      } catch (error) {
+        result.status = false;
+        result.res = error;
+        ctx.body = result;
+      }
+    }
+  },
   async setPolicy(ctx) {
     let formData = ctx.request.body;
-    let res = {};
-    try {
-      let result = await setPolicy(formData);
-      res = result;
-      ctx.body = res;
-    } catch (error) {
-      ctx.body = error;
+    let issuerDID = formData.issuer;
+    let resourceDID = formData.resourceIdentity;
+    let issuerDID_info = issuerDID.split(":");
+    let resourceDID_info = resourceDID.split(":");
+    let result = {};
+
+    if (issuerDID_info[0] != "did" || resourceDID_info[0] != "did") {
+      console.log(`not did format`);
+      result.msg = `not did format`;
+      result.status = false;
+      ctx.body = result;
+    } else if (issuerDID_info[1] != config.did.method || resourceDID_info[1] != config.did.method) {
+      console.log(`not supportting DID method`);
+      result.msg = `not supportting DID method`;
+      result.status = false;
+      ctx.body = result;
+    } else {
+      try {
+        formData.issuerAddress = issuerDID_info[2];
+        formData.resourceIdentity = resourceDID_info[2];
+        //first, get did url from registry contract
+        result.res = await setPolicy(formData);
+        result.status = true;
+        ctx.body = result;
+      } catch (error) {
+        result.status = false;
+        result.res = error;
+        ctx.body = result;
+      }
     }
   },
   async requestRegister(ctx) {
