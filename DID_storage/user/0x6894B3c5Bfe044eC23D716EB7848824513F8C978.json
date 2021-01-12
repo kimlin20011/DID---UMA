@@ -1,7 +1,7 @@
 {
   "@context": "https://w3id.org/did/v1",
   "id": "0x6894B3c5Bfe044eC23D716EB7848824513F8C978",
-  "issuer": "did:ethr:0x6894b3c5bfe044ec23d716eb7848824513f8c978",
+  "issuer": "did:ethr:0x6894B3c5Bfe044eC23D716EB7848824513F8C978",
   "publicKey": [
     {
       "id": "did:ethr:0x6894B3c5Bfe044eC23D716EB7848824513F8C978#controller",
@@ -10,13 +10,18 @@
       "ethereumAddress": "0x6894B3c5Bfe044eC23D716EB7848824513F8C978"
     }
   ],
-  "claim": { "staffID": 405263, "allowenceStatus": 1, "expire": 13120647220 },
+  "claim": {
+    "claim": "japan",
+    "userID": 39838488,
+    "allowenceStatus": 1,
+    "expire": 13121081019
+  },
   "signautre": [
     {
       "type": "Secp256k1SignatureAuthentication2018",
-      "publicKey": "did:ethr:0x6894b3c5bfe044ec23d716eb7848824513f8c978",
-      "nonce": "5685",
-      "signaturevalue": "0x78afce24cc34f61473f15a689e92b42cc8ddd8fa3b4d1a5c0e032c6c57270ad70a9a29351e0aead6fd1c65fca3815314bdf0287339ddacd60134abbcc6e4bb201b"
+      "publicKey": "did:ethr:0x6894B3c5Bfe044eC23D716EB7848824513F8C978",
+      "nonce": "8778",
+      "signaturevalue": "0x5251a7fa36046f1ea45c863825b95c40bb3aab64aa302d90d3be09afc59a0fa44a9a7956c88a37f9e554954804d555ef3d97a46f6cf6c86105e3f14d027164d41c"
     }
   ]
 }

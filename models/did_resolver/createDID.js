@@ -18,7 +18,7 @@ module.exports = async function createDID(data) {
   let _identity = data.identity;
   let url = `http://localhost:3001/DIDDocument/?did=${_identity}`;
   let expire_time = now + config.did.expire * 31536000;
-  let randomID = Math.floor(Math.random() * 1000000) + 1;
+  let randomID = Math.floor(Math.random() * 100000000) + 1;
   let _nonce = (Math.floor(Math.random() * 10000) + 1).toString();
   //let _signature = await signMessage(config.did.issuer, _identity, _nonce);
   let _signature = await sign(data);
@@ -27,17 +27,17 @@ module.exports = async function createDID(data) {
   let did_info = {
     "@context": config.did.context,
     id: _identity,
-    issuer: `did:${config.did.method}:${config.did.issuer}`,
+    issuer: `did:${config.did.method}:${nowAccount}`,
     publicKey: [
       {
         id: `did:${config.did.method}:${_identity}#controller`,
         type: config.did.publicKey.type,
         controller: `did:${config.did.method}:${_identity}`,
-        ethereumAddress: nowAccount
+        ethereumAddress: _identity
       }
     ],
     claim: {
-      Nationality: `${config.did.nationality}`,
+      claim: `${data.claim}`,
       userID: randomID,
       allowenceStatus: 1,
       expire: expire_time
@@ -45,7 +45,7 @@ module.exports = async function createDID(data) {
     signautre: [
       {
         type: config.did.signature.type,
-        publicKey: `did:${config.did.method}:${config.did.issuer}`,
+        publicKey: `did:${config.did.method}:${nowAccount}`,
         nonce: _nonce,
         signaturevalue: _signature
       }
@@ -58,7 +58,7 @@ module.exports = async function createDID(data) {
     result.document = did_info;
     result.status = true;
     let data = JSON.stringify(result.document);
-    fs.writeFileSync(`./DID_storage/${_identity}.json`, data);
+    fs.writeFileSync(`./DID_storage/user/${_identity}.json`, data);
     resolve(result);
   });
 };

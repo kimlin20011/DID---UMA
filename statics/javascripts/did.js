@@ -28,6 +28,11 @@ let creatDID_input = $("#creatDID_input");
 let creatDID_claim_input = $("#creatDID_claim_input");
 let creatDID_button = $("#creatDID_button");
 
+let creat_Resource_DID_input = $("#creat_Resource_DID_input");
+let creat_Resource_DID_name_input = $("#creat_Resource_DID_name_input");
+let creat_Resource_claim_input = $("#creat_Resource_claim_input");
+let creat_Resource_DID_button = $("#creat_Resource_DID_button");
+
 let logger = $("#logger");
 let nowAccount = "";
 
@@ -211,6 +216,33 @@ creatDID_button.on("click", function() {
         doneTransactionStatus();
       } else {
         log(`creatDID failed`);
+        log(result);
+        doneTransactionStatus();
+      }
+    }
+  );
+});
+
+creat_Resource_DID_button.on("click", function() {
+  waitTransactionStatus();
+
+  $.post(
+    "didResolver/createResourceDID",
+    {
+      account: nowAccount,
+      password: password,
+      owner: nowAccount,
+      resourceName: creat_Resource_DID_name_input.val(),
+      registryAddress: registry_address,
+      identity: creat_Resource_DID_input.val(),
+      claim: creat_Resource_claim_input.val()
+    },
+    function(result) {
+      if (result.status === true) {
+        log(result);
+        doneTransactionStatus();
+      } else {
+        log(`creatResourceDID failed`);
         log(result);
         doneTransactionStatus();
       }
