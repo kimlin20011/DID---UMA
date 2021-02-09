@@ -55,7 +55,7 @@ module.exports = async function createResoruceDID(data) {
     result.document = did_info;
     result.status = true;
     let data = JSON.stringify(result.document);
-    fs.writeFileSync(`./DID_storage/resource/${_identity}.json`, data);
+    fs.writeFileSync(`./DID_storage/${_identity}.json`, data);
     resolve(result);
   });
 };

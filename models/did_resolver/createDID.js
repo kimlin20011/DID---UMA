@@ -58,7 +58,7 @@ module.exports = async function createDID(data) {
     result.document = did_info;
     result.status = true;
     let data = JSON.stringify(result.document);
-    fs.writeFileSync(`./DID_storage/user/${_identity}.json`, data);
+    fs.writeFileSync(`./DID_storage/${_identity}.json`, data);
     resolve(result);
   });
 };

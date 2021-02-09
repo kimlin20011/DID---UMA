@@ -1,0 +1,28 @@
+{
+  "@context": "https://w3id.org/did/v1",
+  "id": "0x1EB28C6c4C718A461a5B6694E98CefD29a5187d3",
+  "issuer": "did:ethr:0x6894B3c5Bfe044eC23D716EB7848824513F8C978",
+  "publicKey": [
+    {
+      "id": "did:ethr:0x1EB28C6c4C718A461a5B6694E98CefD29a5187d3#controller",
+      "type": "Secp256k1VerificationKey2018",
+      "controller": "did:ethr:0x1EB28C6c4C718A461a5B6694E98CefD29a5187d3",
+      "ethereumAddress": "0x1EB28C6c4C718A461a5B6694E98CefD29a5187d3"
+    }
+  ],
+  "claim": {
+    "owner": "0x6894B3c5Bfe044eC23D716EB7848824513F8C978",
+    "name": "charge3",
+    "resourceID": 235985,
+    "allowenceStatus": 1,
+    "expire": 13123489276
+  },
+  "signautre": [
+    {
+      "type": "Secp256k1SignatureAuthentication2018",
+      "publicKey": "did:ethr:0x6894B3c5Bfe044eC23D716EB7848824513F8C978",
+      "nonce": "5114",
+      "signaturevalue": "0x78afce24cc34f61473f15a689e92b42cc8ddd8fa3b4d1a5c0e032c6c57270ad70a9a29351e0aead6fd1c65fca3815314bdf0287339ddacd60134abbcc6e4bb201b"
+    }
+  ]
+}
