@@ -1,11 +1,25 @@
-let qr_code = $("#qrcode");
+var qrcode = new QRCode("qrcode");
 
-qr_code.qrcode({
-    width: 200, //寬
-    height: 200, //高
-    render: "div",
-    background: "#FFFFFF", //背景色
-    foreground: "#1C3454", //前景色
-    //text: asAddress
-    text: `https://www.google.com.tw/`
-});
+function makeCode() {
+    var elText = document.getElementById("text");
+
+    if (!elText.value) {
+        alert("Input a text");
+        elText.focus();
+        return;
+    }
+
+    qrcode.makeCode(elText.value);
+}
+
+makeCode();
+
+$("#text").
+    on("blur", function () {
+        makeCode();
+    }).
+    on("keydown", function (e) {
+        if (e.keyCode == 13) {
+            makeCode();
+        }
+    });
