@@ -1,0 +1,28 @@
+{
+    "@context": "https://w3id.org/did/v1",
+    "id": "0xeE463875C4b3Fd77a5B80a698aCc6198618C5c73",
+    "issuer": "did:ethr:0x69542Afe5bdDEdD0BA6297B0e73b38Fa88BA84a1",
+    "publicKey": [
+        {
+            "id": "did:ethr:0xeE463875C4b3Fd77a5B80a698aCc6198618C5c73#controller",
+            "type": "Secp256k1VerificationKey2018",
+            "controller": "did:ethr:0xeE463875C4b3Fd77a5B80a698aCc6198618C5c73",
+            "ethereumAddress": "0xeE463875C4b3Fd77a5B80a698aCc6198618C5c73"
+        }
+    ],
+    "claim": {
+        "owner": "0x69542Afe5bdDEdD0BA6297B0e73b38Fa88BA84a1",
+        "name": "charger2",
+        "resourceID": 6797044,
+        "allowenceStatus": 1,
+        "expire": 13123761920
+    },
+    "signautre": [
+        {
+            "type": "Secp256k1SignatureAuthentication2018",
+            "publicKey": "did:ethr:0x69542Afe5bdDEdD0BA6297B0e73b38Fa88BA84a1",
+            "nonce": "1543",
+            "signaturevalue": "0x0deb458f2be436f43abd6c0fd2283bd98d4f23d9178363390914e31cf0d3f0c53226f724a160b0bd5358a4cd74e9f9830b1479caf60b4e6d6b5717a2db1320491b"
+        }
+    ]
+}

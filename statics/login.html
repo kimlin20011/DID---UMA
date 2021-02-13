@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Request Party Page</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <link rel="stylesheet" href="stylesheets/style.css" />
+</head>
+
+<body>
+    <div class="head">
+        <img class="headimg" src="https://i.imgur.com/2ufnS6k.png" />
+        <img class="headimg" src="https://i.imgur.com/GlBja5L.png" />
+        <img class="headimg" src="https://i.imgur.com/gX1VYt0.png" />
+        <img class="headimg" src="https://i.imgur.com/noDq28C.png" />
+        <h1>Request Party</h1>
+    </div>
+
+    <div class="flex">
+        <div class="item" style="width: 50%;">
+            <div class="topic">
+                <div class="topic-item">
+                    <img src="https://i.imgur.com/vUW22sE.png" />
+                </div>
+                <div class="topic-item">
+                    <h2>Request Party</h2>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="left-flex">
+                <div class="left-item">
+                    <div class="left-col-2">
+                        <!-- <div class="title"><br />Geth Login<br /></div> -->
+                        <div>
+                            <h5 class="title"><br />Setting</h5>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <div class="left-item">
+                    <div class="right-col-2">
+                        <h5 id="accountStatus" style="color: red">Account status:</h5>
+                        <h5 style="font-weight:bold;">Select Geth Account</h5>
+                        <select id="whoami"></select><br />
+                        <button id="whoamiButton">login</button>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="left-flex">
+                <div class="left-item">
+                    <div class="left-col-2">
+                        <h5 class="title">Resources<br /></h5>
+                        <!-- <div class="title"><br />DID Login<br /></div> -->
+                    </div>
+                </div>
+                <div class="left-item">
+                    <div class="right-col-2">
+                        <h5 style="font-weight:bold;">Exist Resource</h5>
+                        <select id="resourcesName"></select><br />
+                        <button id="ResourceAccessButton">Access</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="item" style="width: 50%;">
+            <div class="topic">
+                <div class="topic-item">
+                    <img src="https://i.imgur.com/dQuVooa.png?1" />
+                </div>
+                <div class="topic-item">
+                    <h2>Log</h2>
+                </div>
+            </div>
+            <div class="right-item" style="overflow-y: auto;">
+                <pre id="logger"></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Please access the QR code to provide your DID</p>
+            <div id="qrcode"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <span class="copyright">Copyright &copy; Chun-An Lin. All rights reserved</span>
+        </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="javascripts/login.js"></script>
+</body>
+
+</html>

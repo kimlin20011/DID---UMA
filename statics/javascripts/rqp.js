@@ -34,14 +34,13 @@ function log(...inputs) {
 }
 
 // 當按下登入按鍵時
-whoamiButton.on("click", async function() {
+whoamiButton.on("click", async function () {
   nowAccount = whoami.val();
   log(nowAccount, "Login Ethereum Account");
-  modal.style.display = "block";
 });
 
 // 載入使用者至 select tag
-$.get("/blockchain/accounts", function(accounts) {
+$.get("/blockchain/accounts", function (accounts) {
   for (let account of accounts) {
     whoami.append(`<option value="${account}">${account}</option>`);
   }
@@ -50,7 +49,7 @@ $.get("/blockchain/accounts", function(accounts) {
 });
 
 // 載入存在的resource至 select tag
-$.get("/uma/getExistResources", function(results) {
+$.get("/uma/getExistResources", function (results) {
   for (let info of results.info) {
     resourcesName.append(
       `<option value="${info.resourceName}">${info.resourceName}</option>`
@@ -61,7 +60,7 @@ $.get("/uma/getExistResources", function(results) {
   log(`Choosed resource:${nowResource}`);
 });
 
-ResourceAccessButton.on("click", function() {
+ResourceAccessButton.on("click", function () {
   //先檢查resource id有沒有紀錄值
   let resource_name = resourcesName.val();
   if (resourceIds[resource_name] == null) {
@@ -81,11 +80,12 @@ ResourceAccessButton.on("click", function() {
       didMethod: `ethr`,
       resourceIdentity: resourceIds[resource_name]
     },
-    function(result) {
+    function (result) {
       if (result.status === true) {
         log(result);
         doneTransactionStatus();
         //confirm(<div id="qr_code"></div>);
+        modal.style.display = "block";
       } else {
         log(`update failed`);
         log(result);
@@ -99,12 +99,12 @@ ResourceAccessButton.on("click", function() {
 // pop up box
 // 當按下登入按鍵時
 // When the user clicks on <span> (x), close the modal
-span.onclick = function() {
+span.onclick = function () {
   modal.style.display = "none";
 };
 
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
+window.onclick = function (event) {
   if (event.target == modal) {
     modal.style.display = "none";
   }
@@ -136,12 +136,12 @@ function doneTransactionStatus() {
 }
 
 //button style setting
-$(":button").each(function() {
+$(":button").each(function () {
   $(this).on({
-    mouseover: function() {
+    mouseover: function () {
       $(this).attr("style", "background-color: #608de2");
     },
-    mouseout: function() {
+    mouseout: function () {
       $(this).attr("style", "background-color: #4364a1");
     }
   });

@@ -1,0 +1,27 @@
+{
+    "@context": "https://w3id.org/did/v1",
+    "id": "0x69542Afe5bdDEdD0BA6297B0e73b38Fa88BA84a1",
+    "issuer": "did:ethr:0x69542Afe5bdDEdD0BA6297B0e73b38Fa88BA84a1",
+    "publicKey": [
+        {
+            "id": "did:ethr:0x69542Afe5bdDEdD0BA6297B0e73b38Fa88BA84a1#controller",
+            "type": "Secp256k1VerificationKey2018",
+            "controller": "did:ethr:0x69542Afe5bdDEdD0BA6297B0e73b38Fa88BA84a1",
+            "ethereumAddress": "0x69542Afe5bdDEdD0BA6297B0e73b38Fa88BA84a1"
+        }
+    ],
+    "claim": {
+        "claim": "japan",
+        "userID": 61926036,
+        "allowenceStatus": 1,
+        "expire": 13123761651
+    },
+    "signautre": [
+        {
+            "type": "Secp256k1SignatureAuthentication2018",
+            "publicKey": "did:ethr:0x69542Afe5bdDEdD0BA6297B0e73b38Fa88BA84a1",
+            "nonce": "7648",
+            "signaturevalue": "0xedab19c7c3a76398cb9931836c2ca97688360b4686fcaea07761121a76ab559966ad00df035219b13eed6ad9157b9ba13879724c13a420cee23993cde16d13ed1b"
+        }
+    ]
+}
