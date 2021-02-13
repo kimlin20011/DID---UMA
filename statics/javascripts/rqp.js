@@ -18,6 +18,7 @@ let nowResource = "";
 
 let password = `nccutest`;
 let resourceIds = new Map();
+let asAddress = ""
 // used mapping
 //let IoTLoginedMap = new Map();
 //let authorization_address = "";
@@ -85,6 +86,18 @@ ResourceAccessButton.on("click", function () {
         log(result);
         doneTransactionStatus();
         //confirm(<div id="qr_code"></div>);
+        asAddress = result.asIP;
+        //console.log(asAddress)
+        qr_code.qrcode({
+          width: 250, //寬
+          height: 250, //高
+          render: "div",
+          background: "#FFFFFF", //背景色
+          foreground: "#1C3454", //前景色
+          text: asAddress
+          //text: `http://192.168.252.192:3001/login.html`
+        });
+
         modal.style.display = "block";
       } else {
         log(`update failed`);
@@ -110,14 +123,14 @@ window.onclick = function (event) {
   }
 };
 //let utf8qrtext = unescape(encodeURIComponent(`http://www.google.com`));
-qr_code.qrcode({
-  width: 200, //寬
-  height: 200, //高
-  render: "div",
-  background: "#C0D7E8", //背景色
-  foreground: "#1C3454", //前景色
-  text: `http://www.google.com`
-});
+// qr_code.qrcode({
+//   width: 200, //寬
+//   height: 200, //高
+//   render: "div",
+//   background: "#C0D7E8", //背景色
+//   foreground: "#1C3454", //前景色
+//   text: asAddress
+// });
 // $el.qrcode({
 //   render: "div",
 //   size: 250,
