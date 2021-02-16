@@ -11,4 +11,4 @@ module.exports = router
   .post("/accessAuthorize", uma.accessAuthorize)
   .get("/tokenIntrospect", uma.tokenIntrospect)
   .get("/sign", umaRqP.sign)
-  .get("/getExistResources", umaRqP.getExistResources);
+  //.get("/getExistResources", umaRqP.getExistResources);

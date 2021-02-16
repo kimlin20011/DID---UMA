@@ -238,24 +238,29 @@
 				"type": "bytes32"
 			},
 			{
-				"internalType": "address",
-				"name": "_DIDrqp",
-				"type": "address"
-			},
-			{
 				"internalType": "uint8",
-				"name": "_v",
+				"name": "_ticket_v",
 				"type": "uint8"
 			},
 			{
 				"internalType": "bytes32",
-				"name": "_r",
+				"name": "_ticket_r",
 				"type": "bytes32"
 			},
 			{
 				"internalType": "bytes32",
-				"name": "_s",
+				"name": "_ticket_s",
 				"type": "bytes32"
+			},
+			{
+				"internalType": "bytes",
+				"name": "_claim",
+				"type": "bytes"
+			},
+			{
+				"internalType": "address",
+				"name": "_DIDrqp",
+				"type": "address"
 			}
 		],
 		"name": "accessAuthorize",
@@ -275,11 +280,6 @@
 				"internalType": "address",
 				"name": "",
 				"type": "address"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "",
-				"type": "bytes32"
 			}
 		],
 		"name": "accessToken",
@@ -495,25 +495,6 @@
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "bytes32",
-				"name": "",
-				"type": "bytes32"
-			}
-		],
-		"name": "tokenTarget",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
 			}
 		],
 		"stateMutability": "view",

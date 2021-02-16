@@ -168,9 +168,9 @@ contract Authorization {
     mapping(address => bool) public protectedResourceDIDs;
     mapping(bytes32 => address) public permissionTickets; //tickets => DID
     mapping(address => AuthorizationInfo) public authorizationPolicies; //requestPartyDID => AuthorizationInfo
-    mapping(address => mapping(bytes32 => bytes32)) public accessToken; //DIDrqp => ticket => token
+    mapping(address => bytes32) public accessToken; //ticket => token
     mapping(bytes32 => uint256) public tokenValidTime; //token => timestamp
-    mapping(bytes32 => address) public tokenTarget; //token => DIDrqp
+    //mapping(bytes32 => address) public tokenTarget; //token => DIDrqp
 
     modifier onlyOwner(address _sender) {
         require(owners[_sender] == true);
@@ -306,27 +306,27 @@ contract Authorization {
 
     function accessAuthorize(
         bytes32 _ticket,
-        address _DIDrqp,
-        uint8 _v,
-        bytes32 _r,
-        bytes32 _s,
-        bytes memory _claim
+        uint8 _ticket_v,
+        bytes32 _ticket_r,
+        bytes32 _ticket_s,
+        bytes memory _claim,
+        address _DIDrqp
     ) public returns (bool) {
         //ticket mapping到identifier 以查詢ticket是要對應到什麼resource
         require(permissionTickets[_ticket] != address(0), "invaild_ticket");
-        AuthorizationInfo storage claimInfo =
+        AuthorizationInfo storage authorizationInfo =
             authorizationPolicies[permissionTickets[_ticket]];
         //first check the claim
         bytes32 claimHash = (keccak256(abi.encodePacked(_claim)));
-        require(claimHash == claimInfo.claimHash, "claim invaild");
+        require(claimHash == authorizationInfo.claimHash, "claim invaild");
         bytes memory prefix = "\x19Ethereum Signed Message:\n32";
         //驗證提供ticket的是不是RqP
         address signer =
             ecrecover(
                 (keccak256(abi.encodePacked(prefix, _ticket))),
-                _v,
-                _r,
-                _s
+                _ticket_v,
+                _ticket_r,
+                _ticket_s
             );
 
         //驗證提供ticket的signer是不是RqP，驗證成功則生成access token
@@ -347,9 +347,9 @@ contract Authorization {
                         )
                     )
                 );
-            accessToken[msg.sender][_ticket] = token;
+            accessToken[_DIDrqp] = token;
             tokenValidTime[token] = expireDate;
-            tokenTarget[token] = _DIDrqp;
+            //tokenTarget[token] = _DIDrqp;
             emit TokenReleased(
                 _DIDrqp,
                 msg.sender,
@@ -383,7 +383,7 @@ contract Authorization {
                 _s
             );
 
-        if (tokenTarget[_token] == signer) {
+        if (accessToken[signer] == _token) {
             return true;
         } else {
             return false;

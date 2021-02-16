@@ -25,6 +25,7 @@ let register_did_document_button = $("#register_did_document_button");
 let document_did_input = $("#document_did_input");
 
 let creatDID_input = $("#creatDID_input");
+let creatDID_name_input = $("#creatDID_name_input");
 let creatDID_claim_input = $("#creatDID_claim_input");
 let creatDID_button = $("#creatDID_button");
 
@@ -53,13 +54,13 @@ function log(...inputs) {
 }
 
 // 當按下登入按鍵時
-whoamiButton.on("click", async function() {
+whoamiButton.on("click", async function () {
   nowAccount = whoami.val();
   log(nowAccount, "Login Ethereum Account");
 });
 
 // 載入使用者至 select tag
-$.get("/blockchain/accounts", function(accounts) {
+$.get("/blockchain/accounts", function (accounts) {
   for (let account of accounts) {
     whoami.append(`<option value="${account}">${account}</option>`);
   }
@@ -68,7 +69,7 @@ $.get("/blockchain/accounts", function(accounts) {
 });
 
 //按下deploy_RM_contract_button時
-deploy_button.on("click", function() {
+deploy_button.on("click", function () {
   waitTransactionStatus();
 
   $.post(
@@ -77,7 +78,7 @@ deploy_button.on("click", function() {
       account: nowAccount,
       password: password
     },
-    function(result) {
+    function (result) {
       /*        log({
             result : result,
         });*/
@@ -100,7 +101,7 @@ deploy_button.on("click", function() {
 });
 
 //按下submit_registry_button時
-submit_registry_button.on("click", function() {
+submit_registry_button.on("click", function () {
   registry_address = submit_registry_input.val();
   log(`registry address submit success, contract address：${registry_address}`);
   $("#registry_address").html(
@@ -108,7 +109,7 @@ submit_registry_button.on("click", function() {
   );
 });
 
-register_button.on("click", function() {
+register_button.on("click", function () {
   waitTransactionStatus();
 
   $.post(
@@ -120,7 +121,7 @@ register_button.on("click", function() {
       identity: register_id.val(),
       registryAddress: registry_address
     },
-    function(result) {
+    function (result) {
       if (result.status === true) {
         log(result);
         doneTransactionStatus();
@@ -133,10 +134,10 @@ register_button.on("click", function() {
   );
 });
 
-resolve_button.on("click", function() {
+resolve_button.on("click", function () {
   waitTransactionStatus();
 
-  $.get(`didResolver/resolve?did=${resolve_did.val()}`, function(result) {
+  $.get(`didResolver/resolve?did=${resolve_did.val()}`, function (result) {
     if (result.status === true) {
       log(result);
       doneTransactionStatus();
@@ -148,7 +149,7 @@ resolve_button.on("click", function() {
   });
 });
 
-update_button.on("click", function() {
+update_button.on("click", function () {
   waitTransactionStatus();
 
   $.post(
@@ -161,7 +162,7 @@ update_button.on("click", function() {
       identity: update_did.val(),
       registryAddress: registry_address
     },
-    function(result) {
+    function (result) {
       if (result.status === true) {
         log(result);
         doneTransactionStatus();
@@ -174,7 +175,7 @@ update_button.on("click", function() {
   );
 });
 
-revoke_button.on("click", function() {
+revoke_button.on("click", function () {
   waitTransactionStatus();
 
   $.post(
@@ -185,7 +186,7 @@ revoke_button.on("click", function() {
       registryAddress: registry_address,
       identity: revoke_did.val()
     },
-    function(result) {
+    function (result) {
       if (result.status === true) {
         log(result);
         doneTransactionStatus();
@@ -198,19 +199,20 @@ revoke_button.on("click", function() {
   );
 });
 
-creatDID_button.on("click", function() {
+creatDID_button.on("click", function () {
   waitTransactionStatus();
 
   $.post(
-    "didResolver/createDID",
+    "umaRqP/createUserDID",
     {
       account: nowAccount,
       password: password,
       registryAddress: registry_address,
+      name: creatDID_name_input.val(),
       identity: creatDID_input.val(),
       claim: creatDID_claim_input.val()
     },
-    function(result) {
+    function (result) {
       if (result.status === true) {
         log(result);
         doneTransactionStatus();
@@ -223,7 +225,7 @@ creatDID_button.on("click", function() {
   );
 });
 
-creat_Resource_DID_button.on("click", function() {
+creat_Resource_DID_button.on("click", function () {
   waitTransactionStatus();
 
   $.post(
@@ -237,7 +239,7 @@ creat_Resource_DID_button.on("click", function() {
       identity: creat_Resource_DID_input.val(),
       claim: creat_Resource_claim_input.val()
     },
-    function(result) {
+    function (result) {
       if (result.status === true) {
         log(result);
         doneTransactionStatus();
@@ -272,12 +274,12 @@ function doneTransactionStatus() {
   $("#accountStatus").text("Account status:");
 }
 
-$(":button").each(function() {
+$(":button").each(function () {
   $(this).on({
-    mouseover: function() {
+    mouseover: function () {
       $(this).attr("style", "background-color: #608de2");
     },
-    mouseout: function() {
+    mouseout: function () {
       $(this).attr("style", "background-color: #4364a1");
     }
   });

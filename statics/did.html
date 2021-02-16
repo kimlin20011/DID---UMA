@@ -1,241 +1,196 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>DID demo</title>
 
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
-    />
-    -->
-    <link rel="stylesheet" href="stylesheets/style.css" />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <title>DID demo</title>
 
-  <body>
-    <div class="head">
-      <img class="headimg" src="https://i.imgur.com/2ufnS6k.png" />
-      <img class="headimg" src="https://i.imgur.com/GlBja5L.png" />
-      <img class="headimg" src="https://i.imgur.com/gX1VYt0.png" />
-      <img class="headimg" src="https://i.imgur.com/noDq28C.png" />
-      <h1>DID demo</h1>
-    </div>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+  -->
+  <link rel="stylesheet" href="stylesheets/style.css" />
+</head>
 
-    <div class="flex">
-      <div class="item" style="width: 50%;">
-        <div class="topic">
-          <div class="topic-item">
-            <img src="https://i.imgur.com/vUW22sE.png" />
-          </div>
-          <div class="topic-item">
-            <h2>DID owner</h2>
-          </div>
+<body>
+  <div class="head">
+    <img class="headimg" src="https://i.imgur.com/2ufnS6k.png" />
+    <img class="headimg" src="https://i.imgur.com/GlBja5L.png" />
+    <img class="headimg" src="https://i.imgur.com/gX1VYt0.png" />
+    <img class="headimg" src="https://i.imgur.com/noDq28C.png" />
+    <h1>DID demo</h1>
+  </div>
+
+  <div class="flex">
+    <div class="item" style="width: 50%;">
+      <div class="topic">
+        <div class="topic-item">
+          <img src="https://i.imgur.com/vUW22sE.png" />
         </div>
+        <div class="topic-item">
+          <h2>DID owner</h2>
+        </div>
+      </div>
 
-        <br />
+      <br />
 
-        <div class="left-flex">
-          <div class="left-item">
-            <div class="left-col-2">
-              <!-- <div class="title"><br />Geth Login<br /></div> -->
-              <div>
-                <h5 class="title">Setting</h5>
-                <br />
-              </div>
-            </div>
-          </div>
-          <div class="left-item">
-            <div class="right-col-2">
-              <h5 id="accountStatus" style="color: red">Account status:</h5>
-              <h5 style="font-weight:bold;">Select Geth Account</h5>
-              <select id="whoami"></select
-              ><br />
-              <button id="whoamiButton">login</button>
-              <hr size="5px" color="blue" align="center" width="100%" />
-              <p id="registry_address" style="color: red">
-                Registry address: not exist
-              </p>
-              <h5 style="font-weight:bold;">DID registry deploy (Opt.)</h5>
-              <button type="button" id="deploy_button">deploy</button>
-              <hr size="2px" align="center" width="100%" />
-              <h5 style="font-weight:bold;">
-                Submit Deployed DID registry (Opt.)
-              </h5>
-              <input
-                id="submit_registry_input"
-                type="text"
-                placeholder="DID registry address"
-              />
-              <br /><br />
-              <button type="button" id="submit_registry_button">submit</button>
-
-              <hr size="2px" align="center" width="100%" />
-              <h5 style="font-weight:bold;">
-                Create User DID (return DID URL and Document)
-              </h5>
-              <input
-                id="creatDID_input"
-                type="text"
-                placeholder="Expect Identity"
-              />
-              <br /><br />
-              <input
-                id="creatDID_claim_input"
-                type="text"
-                placeholder="claim information"
-              />
-              <br /><br />
-              <button type="button" id="creatDID_button">submit</button>
-              <hr size="2px" align="center" width="100%" />
-              <h5 style="font-weight:bold;">
-                Create Resource DID (return DID URL and Document)
-              </h5>
-              <input
-                id="creat_Resource_DID_input"
-                type="text"
-                placeholder="your expect identity"
-              />
-              <br /><br />
-              <input
-                id="creat_Resource_DID_name_input"
-                type="text"
-                placeholder="your resource name"
-              />
-              <br /><br />
-              <input
-                id="creat_Resource_claim_input"
-                type="text"
-                placeholder="your expect claim"
-              />
-              <br /><br />
-              <button type="button" id="creat_Resource_DID_button">
-                submit
-              </button>
+      <div class="left-flex">
+        <div class="left-item">
+          <div class="left-col-2">
+            <!-- <div class="title"><br />Geth Login<br /></div> -->
+            <div>
+              <h5 class="title">Setting</h5>
+              <br />
             </div>
           </div>
         </div>
+        <div class="left-item">
+          <div class="right-col-2">
+            <h5 id="accountStatus" style="color: red">Account status:</h5>
+            <h5 style="font-weight:bold;">Select Geth Account</h5>
+            <select id="whoami"></select><br />
+            <button id="whoamiButton">login</button>
+            <hr size="5px" color="blue" align="center" width="100%" />
+            <p id="registry_address" style="color: red">
+              Registry address: not exist
+            </p>
+            <h5 style="font-weight:bold;">DID registry deploy (Opt.)</h5>
+            <button type="button" id="deploy_button">deploy</button>
+            <hr size="2px" align="center" width="100%" />
+            <h5 style="font-weight:bold;">
+              Submit Deployed DID registry (Opt.)
+            </h5>
+            <input id="submit_registry_input" type="text" placeholder="DID registry address" />
+            <br /><br />
+            <button type="button" id="submit_registry_button">submit</button>
 
-        <br />
-
-        <div class="left-flex">
-          <div class="left-item">
-            <div class="left-col-2">
-              <h5 class="title">DID Operation</h5>
-              <!-- <div class="title"><br />DID Operation<br /></div> -->
-            </div>
+            <hr size="2px" align="center" width="100%" />
+            <h5 style="font-weight:bold;">
+              Create User DID (return DID URL and Document)
+            </h5>
+            <input id="creatDID_name_input" type="text" placeholder="Expect DID name" />
+            <br /><br />
+            <input id="creatDID_input" type="text" placeholder="Expect Identity" />
+            <br /><br />
+            <input id="creatDID_claim_input" type="text" placeholder="claim information" />
+            <br /><br />
+            <button type="button" id="creatDID_button">submit</button>
+            <hr size="2px" align="center" width="100%" />
+            <h5 style="font-weight:bold;">
+              Create Resource DID (return DID URL and Document)
+            </h5>
+            <input id="creat_Resource_DID_input" type="text" placeholder="your expect identity" />
+            <br /><br />
+            <input id="creat_Resource_DID_name_input" type="text" placeholder="your resource name" />
+            <br /><br />
+            <input id="creat_Resource_claim_input" type="text" placeholder="your expect claim" />
+            <br /><br />
+            <button type="button" id="creat_Resource_DID_button">
+              submit
+            </button>
           </div>
-          <div class="left-item">
-            <div class="right-col-2">
-              <!-- <h5 style="font-weight:bold;">DID create</h5>
+        </div>
+      </div>
+
+      <br />
+
+      <div class="left-flex">
+        <div class="left-item">
+          <div class="left-col-2">
+            <h5 class="title">DID Operation</h5>
+            <!-- <div class="title"><br />DID Operation<br /></div> -->
+          </div>
+        </div>
+        <div class="left-item">
+          <div class="right-col-2">
+            <!-- <h5 style="font-weight:bold;">DID create</h5>
               <button type="button" id="create_button">create</button>
               <hr size="2px" align="center" width="100%" /> -->
-              <h5 style="font-weight:bold;">DID register (Create)</h5>
-              <input id="register_id" type="text" placeholder="identity" />
-              <br /><br />
-              <input id="register_url" type="text" placeholder="URL" />
-              <br /><br />
-              <button type="button" id="register_button">register</button>
-              <!-- <p id="rm_address">RM address:</p> -->
-              <br />
-              <hr size="2px" align="center" width="100%" />
-              <h5 style="font-weight:bold;">DID resolve (Read)</h5>
-              <input id="resolve_did" type="text" placeholder="DID" />
-              <br /><br />
-              <button type="button" id="resolve_button">resolve</button>
-              <br />
-              <hr size="2px" align="center" width="100%" />
-              <h5 style="font-weight:bold;">DID update (Update)</h5>
-              <input
-                id="update_did"
-                type="text"
-                placeholder="DID"
-              /><br /><br />
-              <input
-                id="update_old_url"
-                type="text"
-                placeholder="URL"
-              /><br /><br />
-              <input
-                id="update_new_url"
-                type="text"
-                placeholder="New URL"
-              /><br /><br />
-              <button type="button" id="update_button">update</button>
-              <hr size="2px" align="center" width="100%" />
-              <h5 style="font-weight:bold;">DID revoke (Delete)</h5>
-              <input id="revoke_did" type="text" placeholder="DID" />
-              <br /><br />
-              <button type="button" id="revoke_button">resolve</button>
-              <hr size="5px" color="blue" align="center" width="100%" />
-              <h5 style="font-weight:bold;">Register DID Document</h5>
-              <input id="document_did_input" type="text" placeholder="DID" />
-              <br /><br />
-              <input
-                id="document_input"
-                type="text"
-                placeholder="DID Document (encode)"
-              />
-              <br /><br />
-              <button type="button" id="register_did_document_button">
-                register
-              </button>
-            </div>
-          </div>
-        </div>
-        <br />
-
-        <div class="left-flex">
-          <div class="left-item">
-            <div class="left-col-2">
-              <h5 class="title"><br />DID Login<br /></h5>
-              <!-- <div class="title"><br />DID Login<br /></div> -->
-            </div>
-          </div>
-          <div class="left-item">
-            <div class="right-col-2">
-              <button
-                id="did_login_button"
-                onclick="javascript:location.href=`resource.html?RM_address=${RM_address}&Auth_address=${Auth_address}&nowAccount=${nowAccount}&password=${password}`"
-              >
-                Login with DID
-              </button>
-            </div>
+            <h5 style="font-weight:bold;">DID register (Create)</h5>
+            <input id="register_id" type="text" placeholder="identity" />
+            <br /><br />
+            <input id="register_url" type="text" placeholder="URL" />
+            <br /><br />
+            <button type="button" id="register_button">register</button>
+            <!-- <p id="rm_address">RM address:</p> -->
+            <br />
+            <hr size="2px" align="center" width="100%" />
+            <h5 style="font-weight:bold;">DID resolve (Read)</h5>
+            <input id="resolve_did" type="text" placeholder="DID" />
+            <br /><br />
+            <button type="button" id="resolve_button">resolve</button>
+            <br />
+            <hr size="2px" align="center" width="100%" />
+            <h5 style="font-weight:bold;">DID update (Update)</h5>
+            <input id="update_did" type="text" placeholder="DID" /><br /><br />
+            <input id="update_old_url" type="text" placeholder="URL" /><br /><br />
+            <input id="update_new_url" type="text" placeholder="New URL" /><br /><br />
+            <button type="button" id="update_button">update</button>
+            <hr size="2px" align="center" width="100%" />
+            <h5 style="font-weight:bold;">DID revoke (Delete)</h5>
+            <input id="revoke_did" type="text" placeholder="DID" />
+            <br /><br />
+            <button type="button" id="revoke_button">resolve</button>
+            <hr size="5px" color="blue" align="center" width="100%" />
+            <h5 style="font-weight:bold;">Register DID Document</h5>
+            <input id="document_did_input" type="text" placeholder="DID" />
+            <br /><br />
+            <input id="document_input" type="text" placeholder="DID Document (encode)" />
+            <br /><br />
+            <button type="button" id="register_did_document_button">
+              register
+            </button>
           </div>
         </div>
       </div>
+      <br />
 
-      <div class="item" style="width: 50%;">
-        <div class="topic">
-          <div class="topic-item">
-            <img src="https://i.imgur.com/dQuVooa.png?1" />
-          </div>
-          <div class="topic-item">
-            <h2>Log</h2>
+      <div class="left-flex">
+        <div class="left-item">
+          <div class="left-col-2">
+            <h5 class="title"><br />DID Login<br /></h5>
+            <!-- <div class="title"><br />DID Login<br /></div> -->
           </div>
         </div>
-        <div class="right-item" style="overflow-y: auto;">
-          <pre id="logger"></pre>
+        <div class="left-item">
+          <div class="right-col-2">
+            <button id="did_login_button"
+              onclick="javascript:location.href=`resource.html?RM_address=${RM_address}&Auth_address=${Auth_address}&nowAccount=${nowAccount}&password=${password}`">
+              Login with DID
+            </button>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Footer -->
-    <footer>
-      <div class="container">
-        <span class="copyright"
-          >Copyright &copy; Chun-An Lin. All rights reserved</span
-        >
+    <div class="item" style="width: 50%;">
+      <div class="topic">
+        <div class="topic-item">
+          <img src="https://i.imgur.com/dQuVooa.png?1" />
+        </div>
+        <div class="topic-item">
+          <h2>Log</h2>
+        </div>
       </div>
-    </footer>
+      <div class="right-item" style="overflow-y: auto;">
+        <pre id="logger"></pre>
+      </div>
+    </div>
+  </div>
 
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="javascripts/did.js"></script>
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <span class="copyright">Copyright &copy; Chun-An Lin. All rights reserved</span>
+    </div>
+  </footer>
 
-    <!--
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="javascripts/did.js"></script>
+
+  <!--
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
-  </body>
+</body>
+
 </html>

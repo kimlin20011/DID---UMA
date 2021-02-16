@@ -50,7 +50,7 @@ $.get("/blockchain/accounts", function (accounts) {
 });
 
 // 載入存在的resource至 select tag
-$.get("/uma/getExistResources", function (results) {
+$.get("/umaRqP/getExistResources", function (results) {
   for (let info of results.info) {
     resourcesName.append(
       `<option value="${info.resourceName}">${info.resourceName}</option>`
