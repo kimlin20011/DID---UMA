@@ -85,17 +85,16 @@ ResourceAccessButton.on("click", function () {
       if (result.status === true) {
         log(result);
         doneTransactionStatus();
-        //confirm(<div id="qr_code"></div>);
         asAddress = result.asIP;
-        //console.log(asAddress)
-        qr_code.qrcode({
+        //first clean the div cotent
+        //then append the new qrcode
+        qr_code.html("").qrcode({
           width: 250, //寬
           height: 250, //高
           render: "div",
           background: "#FFFFFF", //背景色
           foreground: "#1C3454", //前景色
           text: asAddress
-          //text: `http://192.168.252.192:3001/login.html`
         });
 
         modal.style.display = "block";
@@ -122,20 +121,6 @@ window.onclick = function (event) {
     modal.style.display = "none";
   }
 };
-//let utf8qrtext = unescape(encodeURIComponent(`http://www.google.com`));
-// qr_code.qrcode({
-//   width: 200, //寬
-//   height: 200, //高
-//   render: "div",
-//   background: "#C0D7E8", //背景色
-//   foreground: "#1C3454", //前景色
-//   text: asAddress
-// });
-// $el.qrcode({
-//   render: "div",
-//   size: 250,
-//   text: "https://www.google.com.tw/"
-// });
 
 //deploy tr
 function waitTransactionStatus() {

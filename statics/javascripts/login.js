@@ -2,12 +2,15 @@
 
 let did_select = $("#did_select");
 let did_select_Button = $("#did_select_Button");
-
-let userId = new Map();  //map  did_name to did
-
-//document.getElementsByClassName("close")[0];
-//let selectedUserName = "";
+let submit_button = $("#submit_button");
 let userIds = new Map();
+let password = `nccutest`;
+
+let url_string = window.location.href; //get url string
+let url = new URL(url_string);
+let ticket = url.searchParams.get("ticket");
+let ticketSigned = "";
+
 
 
 // 載入存在的resource至 select tag
@@ -21,18 +24,34 @@ $.get("/umaRqP/getExistUser", function (results) {
     }
 });
 
+//select the did and sign the ticket by did
 did_select_Button.on("click", function () {
+    waitTransactionStatus();
+    // sign the ticket by RqP ID
+    $.get("/umaRqP/sign", {
+        account: nowAccount,
+        password: password,
+        text: ticket,
+    }, function (result) {
+        ticketSigned = result;
+        console.log(ticketSigned);
+        doneTransactionStatus();
+    });
+});
+
+
+submit_button.on("click", function () {
     //先檢查resource id有沒有紀錄值
     let user_name = did_select.val();
-    if (resourceIds[resource_name] == null) {
-        log(`resource ID empty`);
-        alert(`resource ID empty`);
+    if (userIds[user_name] == null) {
+        console.log(`user DID empty`);
+        alert(`user DID empty`);
         return;
     }
     waitTransactionStatus();
-
+    //send rqpDid, ticket, ticketSigned
     $.post(
-        "uma/accessAuthorize",
+        "uma/authorizationRequest",
         {
             account: nowAccount,
             password: password,
@@ -41,29 +60,21 @@ did_select_Button.on("click", function () {
         },
         function (result) {
             if (result.status === true) {
-                log(result);
+                console.log(result);
                 doneTransactionStatus();
             } else {
-                log(`update failed`);
-                log(result);
+                console.log(`update failed`);
+                console.log(result);
                 doneTransactionStatus();
-                alert(`request access failed`);
+                alert(`Access authorization failed`);
             }
         }
     );
 });
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-};
-
-//deploy tr
 function waitTransactionStatus() {
     $("#nowStatus").html(
-        'Account status:<b style="color: blue">(Transaction Padding...)</b>'
+        'Account status:<b style="color: blue">(Padding...)</b>'
     );
 }
 

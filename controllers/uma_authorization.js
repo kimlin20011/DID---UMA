@@ -31,7 +31,7 @@ module.exports = {
     }
   },
   async registerResource(ctx) {
-  let formData = ctx.request.body;
+    let formData = ctx.request.body;
     let did = formData.identity;
     let did_info = did.split(":");
     let result = {};
@@ -116,6 +116,21 @@ module.exports = {
     }
   },
   async tokenIntrospect(ctx) {
+    let formData = ctx.request.body;
+    let res = {};
+    try {
+      let result = await tokenIntrospect(formData);
+      res = result;
+      ctx.body = res;
+    } catch (error) {
+      ctx.body = error;
+    }
+  },
+  //request by client
+  async AuthorizationAccess(ctx) {
+    //recieve ticket, signTicket, RqP_DID 
+    //first, resolve did to get the claim by did resolver
+    //second, send the claim, ticket, signTicket, RqP_DID to the smart contract
     let formData = ctx.request.body;
     let res = {};
     try {
