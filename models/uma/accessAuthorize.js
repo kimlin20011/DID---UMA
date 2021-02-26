@@ -16,7 +16,11 @@ module.exports = async function accessAuthorize(data) {
   let AuthorizationAddress = fs
     .readFileSync("./Authorization_address.txt")
     .toString();
-  let signature = data.signature;
+  let claim = data.claim;
+  let claimByte = web3.utils.utf8ToHex(
+    claim
+  );
+  let ticketCrypto = data.ticketCrypto;
   let password = data.password;
   let Authorization = new web3.eth.Contract(
     Authorization_Abi,
@@ -28,22 +32,22 @@ module.exports = async function accessAuthorize(data) {
     console.log(`not unlock`);
     return;
   }
-  let vrs = EthCrypto.vrs.fromString(signature.toString());
+  let vrs = EthCrypto.vrs.fromString(ticketCrypto.toString());
 
   return new Promise((resolve, reject) => {
     let result = {};
     Authorization.methods
-      .accessAuthorize(ticket,rqpIdentity, vrs.v,vrs.r,vrs.s)
+      .accessAuthorize(ticket, vrs.v, vrs.r, vrs.s, claimByte, rqpIdentity)
       .send({
         from: nowAccount,
         gas: 3000000
       })
-      .on("receipt", function(receipt) {
+      .on("receipt", function (receipt) {
         result.event = receipt.events.TokenReleased.returnValues;
         result.status = true;
         resolve(result);
       })
-      .on("error", function(error) {
+      .on("error", function (error) {
         result.info = `智能合約accessAuthorize操作失敗`;
         result.error = error.toString();
         result.status = false;

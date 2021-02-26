@@ -5,10 +5,12 @@ let did_select_Button = $("#did_select_Button");
 let submit_button = $("#submit_button");
 let userIds = new Map();
 let password = `nccutest`;
+let nowAccount = "";
 
 let url_string = window.location.href; //get url string
 let url = new URL(url_string);
 let ticket = url.searchParams.get("ticket");
+let asURL = url.searchParams.get("asURL");
 let ticketSigned = "";
 
 
@@ -22,13 +24,16 @@ $.get("/umaRqP/getExistUser", function (results) {
         //map the did_name to did
         userIds[info.DID_name] = info.DID;
     }
+    nowAccount = userIds[did_select.val()];
 });
 
 //select the did and sign the ticket by did
 did_select_Button.on("click", function () {
     waitTransactionStatus();
     // sign the ticket by RqP ID
-    $.get("/umaRqP/sign", {
+    nowAccount = userIds[did_select.val()];
+
+    $.post("/umaRqP/sign", {
         account: nowAccount,
         password: password,
         text: ticket,
@@ -51,16 +56,17 @@ submit_button.on("click", function () {
     waitTransactionStatus();
     //send rqpDid, ticket, ticketSigned
     $.post(
-        "uma/authorizationRequest",
+        asURL,
         {
-            account: nowAccount,
-            password: password,
+            rqpId: nowAccount,
+            ticketCrypto: ticketSigned,
+            ticket: ticket,
             didMethod: `ethr`,
-            resourceIdentity: resourceIds[resource_name]
         },
         function (result) {
             if (result.status === true) {
                 console.log(result);
+                alert(`Access authorization success`);
                 doneTransactionStatus();
             } else {
                 console.log(`update failed`);

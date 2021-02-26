@@ -40,7 +40,9 @@ module.exports = async function requestRegister(data) {
       })
       .on("receipt", function (receipt) {
         let result_event = receipt.events.TicketGenerated.returnValues;
-        result.asIP = `http://${localIP}:${config.port}/login.html?ticket=${result_event.permissionTicket}`;
+        //result.asIP = `http://${localIP}:${config.port}/login.html?ticket=${result_event.permissionTicket}`;
+        result.asURL = `http://${localIP}:${config.port}/uma/AuthorizationAccess/`;
+        result.ticket = result_event.permissionTicket
         //result.name = receipt.events.addedResourceSet.returnValues.name;
         result.status = true;
         resolve(result);

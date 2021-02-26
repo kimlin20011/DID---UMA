@@ -17,8 +17,9 @@ module.exports = async function sign(data) {
       .sign(text, nowAccount, password)
       .then(result => {
         resolve(result);
+        //console.log(result)
       })
-      .catch(function(err) {
+      .catch(function (err) {
         console.log(err);
         reject(err);
       });

@@ -5,6 +5,7 @@ const requestRegister = require("../models/uma/requestRegister");
 const accessAuthorize = require("../models/uma/accessAuthorize");
 const tokenIntrospect = require("../models/uma/tokenIntrospect");
 const registerResource = require("../models/authorizationServer/registerResource");
+const resolve = require("../models/did_resolver/resolve");
 const config = require("../configs/config");
 
 module.exports = {
@@ -134,7 +135,20 @@ module.exports = {
     let formData = ctx.request.body;
     let res = {};
     try {
-      let result = await tokenIntrospect(formData);
+      let did_document_url = `http://localhost:3001/DIDDocument/?did=${formData.rqpId}`;
+      let did_document = await resolve(did_document_url);
+      let claim = did_document.claim.claim;
+      //console.log(`claim:${claim}`)
+      let data = {
+        claim: claim,
+        ticketCrypto: formData.ticketCrypto,
+        ticket: formData.ticket,
+        rqpIdentity: formData.rqpId,
+        password: config.geth.password,
+        account: config.geth.account
+      }
+      console.log(data)
+      let result = await accessAuthorize(data);
       res = result;
       ctx.body = res;
     } catch (error) {

@@ -18,7 +18,9 @@ let nowResource = "";
 
 let password = `nccutest`;
 let resourceIds = new Map();
-let asAddress = ""
+let asURL = ""
+let localIP = ""
+let ticket = ""
 // used mapping
 //let IoTLoginedMap = new Map();
 //let authorization_address = "";
@@ -47,6 +49,11 @@ $.get("/blockchain/accounts", function (accounts) {
   }
   nowAccount = whoami.val();
   log(nowAccount, "Login Ethereum Account");
+});
+
+$.get("/umaRqP/getIP", function (ip) {
+  localIP = ip;
+  log(`ip${localIP}"`);
 });
 
 // 載入存在的resource至 select tag
@@ -83,21 +90,22 @@ ResourceAccessButton.on("click", function () {
     },
     function (result) {
       if (result.status === true) {
-        log(result);
         doneTransactionStatus();
-        asAddress = result.asIP;
+        asURL = result.asURL;
+        ticket = result.ticket;
         //first clean the div cotent
         //then append the new qrcode
+        // have to get local host ip
         qr_code.html("").qrcode({
           width: 250, //寬
           height: 250, //高
           render: "div",
           background: "#FFFFFF", //背景色
           foreground: "#1C3454", //前景色
-          text: asAddress
+          text: `http://${localIP}:3001/login.html?ticket=${ticket}&asURL=${asURL}`
         });
-
         modal.style.display = "block";
+        log(`http://${localIP}:3001/login.html?ticket=${ticket}&asURL=${asURL}`);
       } else {
         log(`update failed`);
         log(result);

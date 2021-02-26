@@ -42,19 +42,19 @@ module.exports = {
     nationality: `Japan`
   },
   geth: {
-    account: `0x6894b3c5bfe044ec23d716eb7848824513f8c978`,
+    account: `0x69542afe5bddedd0ba6297b0e73b38fa88ba84a1`,
     //account: `0xdfbc7a1f5f867a9fd73d9fbe9da2b5b34ea67d95`,
-    rqp_account: `0x6894b3c5bfe044ec23d716eb7848824513f8c978`,
+    //rqp_account: `0x6894b3c5bfe044ec23d716eb7848824513f8c978`,
     //暫時不用
     password: process.env.password,
     gethWebsocketUrl: `ws://localhost:8546`,
     //keystoreDir:`C:\\Users\\nccu\\implement\\chain_new\\data\\keystore`
     keystoreDir: `/Users/nccu/Documents/implement/chain_new/data/keystore`
   },
-  mysql:{
-        host: process.env.HOST,
-        user: process.env.DATABASE_USER,
-        password: process.env.DATABASE_PASSWORD,
-        database: process.env.DATABASE
+  mysql: {
+    host: process.env.HOST,
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE
   }
 };
