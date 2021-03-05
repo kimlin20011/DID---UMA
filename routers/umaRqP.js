@@ -6,5 +6,8 @@ module.exports = router
     .get("/getExistResources", umaRqP.getExistResources)
     .get("/getExistUser", umaRqP.getExistUser)
     .post("/createUserDID", umaRqP.createUserDID)
-    .get("/getIP", umaRqP.getIP);
+    .get("/getIP", umaRqP.getIP)
+    .post("/accessAuthorization", umaRqP.accessAuthorization)
+    .get("/resource", umaRqP.getResource);
+
 

@@ -55,27 +55,38 @@ submit_button.on("click", function () {
     }
     waitTransactionStatus();
     //send rqpDid, ticket, ticketSigned
-    $.post(
-        asURL,
-        {
-            rqpId: nowAccount,
-            ticketCrypto: ticketSigned,
-            ticket: ticket,
-            didMethod: `ethr`,
-        },
-        function (result) {
-            if (result.status === true) {
-                console.log(result);
-                alert(`Access authorization success`);
-                doneTransactionStatus();
-            } else {
-                console.log(`update failed`);
-                console.log(result);
-                doneTransactionStatus();
-                alert(`Access authorization failed`);
-            }
-        }
-    );
+    $.post("/umaRqP/accessAuthorization", {
+        asURL: asURL,
+        rqpId: nowAccount,
+        ticketCrypto: ticketSigned,
+        ticket: ticket,
+        didMethod: `ethr`,
+    }, function (result) {
+        console.log(result);
+        doneTransactionStatus();
+    });
+
+    // $.post(
+    //     asURL,
+    //     {
+    //         rqpId: nowAccount,
+    //         ticketCrypto: ticketSigned,
+    //         ticket: ticket,
+    //         didMethod: `ethr`,
+    //     },
+    //     function (result) {
+    //         if (result.status === true) {
+    //             console.log(result);
+    //             alert(`Access authorization success`);
+    //             doneTransactionStatus();
+    //         } else {
+    //             console.log(`update failed`);
+    //             console.log(result);
+    //             doneTransactionStatus();
+    //             alert(`Access authorization failed`);
+    //         }
+    //     }
+    // );
 });
 
 function waitTransactionStatus() {

@@ -2,6 +2,8 @@ const sign = require("../models/umaRqP/sign");
 const getExistResources = require("../models/db/getExistResources");
 const getExistUser = require("../models/db/getExistUser");
 const createUserDID = require("../models/umaRqP/createUserDID");
+const accessAuthorization = require("../models/umaRqP/accessAuthorization");
+const getResource = require("../models/umaRqP/getResource");
 const getLocalIP = require("../models/getLocalIP");
 
 module.exports = {
@@ -56,6 +58,28 @@ module.exports = {
     let res = {};
     try {
       let result = await getLocalIP(formData);
+      res = result;
+      ctx.body = res;
+    } catch (error) {
+      ctx.body = error;
+    }
+  },
+  async accessAuthorization(ctx) {
+    let formData = ctx.request.body;
+    let res = {};
+    try {
+      let result = await accessAuthorization(formData);
+      res = result;
+      ctx.body = res;
+    } catch (error) {
+      ctx.body = error;
+    }
+  },
+  async getResource(ctx) {
+    let formData = ctx.request.body;
+    let res = {};
+    try {
+      let result = await getResource(formData);
       res = result;
       ctx.body = res;
     } catch (error) {
